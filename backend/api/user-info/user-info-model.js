@@ -15,7 +15,11 @@ async function updateUserInfo(changes) {
         .select("u.user_username", "q.user_info_income", "q.user_assets")
         .where("u.user_id", changes.user_id);
 }
+async function updatePassword(changes,id) {
+    await db("users").update(changes).where({user_id : id}); 
+}
 module.exports = {
     findUserInfo,
     updateUserInfo,
+    updatePassword
 }
