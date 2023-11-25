@@ -7,7 +7,7 @@ async function findAll(query,user_id) {
     .join("sub-categories as s","s.sub_category_id","a.sub_category_id")
     .join("users as u","u.user_id","a.user_id")
     .join("category as c","c.category_id","s.category_id")
-    .select("a.activity_description","a.activity_amount","u.user_id","u.user_username","c.category_id","c.category_name","s.sub_category_id","s.sub_category_name")
+    .select("a.activity_description","a.activity_amount","u.user_id","u.user_username","c.category_id","c.category_name","s.sub_category_id","s.sub_category_name","a.activity_id")
     .limit(limit)
     .orderBy(sortby,sortdir)
     .offset(offset)
@@ -21,7 +21,21 @@ async function addActivity(userBody,activity) {
     await db("activity").insert({sub_category_id,user_id,activity_amount,activity_description});
     return activity;
 }
+
+async function updateActivity(userBody,activity) {
+    const {activity_description,activity_amount,sub_category_id,activity_id} = activity;
+    const user_id = userBody.subject[0].user_id;
+    await db("activity").update({sub_category_id,user_id,activity_amount,activity_description})
+    .where("activity_id",activity_id);
+    return await db("activity").where("activity_id",activity_id); 
+}
+
+async function remove(id) {
+    await db("activity").del().where("activity_id",id);
+}
 module.exports = {
     findAll,
-    addActivity
+    addActivity,
+    updateActivity,
+    remove
 }

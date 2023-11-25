@@ -50,3 +50,6 @@ activity_description : string
 > * this endpoint allows users to delete certain purchases
 > * there are authorization headers needed for this from the jwt token given to the user on sign in
 
+### Category endpoint
+* need to add category add option 
+
