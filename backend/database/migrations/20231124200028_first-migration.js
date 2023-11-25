@@ -52,7 +52,7 @@ exports.up = async function(knex) {
     .inTable("users")
     .onDelete("RESTRICT")
     .onUpdate("RESTRICT");
-    table.integer("activity_amount").notNullable();
+    table.float("activity_amount").notNullable();
     table.string("activity_description").notNullable();
     table.dateTime("created_at",{ precision: 6 }).defaultTo(knex.fn.now(6));
 

@@ -27,7 +27,7 @@
 > [!IMPORTANT]
 > * this endpoint allows users to see their financial activity
 > * there are authorization headers needed for this from the jwt token given to the user on sign in
-* http://localhost:8000/api/activity `post` 
+* http://localhost:8000/api/activity `post` `added tolerance message`
 ```
 request body 
 activity_amount : number
