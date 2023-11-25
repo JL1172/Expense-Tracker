@@ -38,11 +38,11 @@ exports.up = async function(knex) {
   })
   .createTable("activity",table => {
     table.increments("activity_id").primary();
-    table.integer("category_id")
+    table.integer("sub_category_id")
     .unsigned()
     .notNullable()
-    .references("category_id")
-    .inTable("category")
+    .references("sub_category_id")
+    .inTable("sub-categories")
     .onDelete("RESTRICT")
     .onUpdate("RESTRICT");
     table.integer("user_id")
@@ -53,6 +53,9 @@ exports.up = async function(knex) {
     .onDelete("RESTRICT")
     .onUpdate("RESTRICT");
     table.integer("activity_amount").notNullable();
+    table.string("activity_description").notNullable();
+    table.dateTime("created_at",{ precision: 6 }).defaultTo(knex.fn.now(6));
+
   })
 };
 

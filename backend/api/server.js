@@ -1,6 +1,7 @@
 const express = require("express");
 const AuthRouter = require("../api/auth/auth-router");
 const UserInfoRouter = require("../api/user-info/user-info-router");
+const ActivityRouter = require("../api/activity/activity-router");
 const path = require("path"); //eslint-disable-line
 
 //import middleware
@@ -30,6 +31,7 @@ server.use(morgan("dev"));
 //routers
 server.use("/api/auth",AuthRouter); 
 server.use("/api/userInfo",UserInfoRouter);
+server.use("/api/activity",ActivityRouter);
 //routers
 
 server.get("*",(req,res,next) => {

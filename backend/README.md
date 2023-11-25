@@ -23,11 +23,21 @@
 > * there are authorization headers needed for this from the jwt token given to the user on sign in
 
 ### User Activity enpoints 
-* http://localhost:8000/api/activity `get`
+* http://localhost:8000/api/activity `get` `takes query parameters`
 > [!IMPORTANT]
 > * this endpoint allows users to see their financial activity
 > * there are authorization headers needed for this from the jwt token given to the user on sign in
-* http://localhost:8000/api/activity `post`
+* http://localhost:8000/api/activity `post` 
+```
+request body 
+activity_amount : number
+sub_category_name : string
+sub_category_id : id
+category_name : string
+category_id : id
+user_username : string
+activity_description : string
+```
 > [!IMPORTANT]
 > * this endpoint allows users to add their assets, liability, and equity, and the current category the activity falls under, and sub categories 
 > * there are authorization headers needed for this from the jwt token given to the user on sign in
