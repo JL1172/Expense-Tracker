@@ -13,6 +13,17 @@ exports.up = async function(knex) {
     table.increments("category_id").primary();
     table.string("category_name").unique().notNullable();
   })
+  .createTable("sub-categories",table => {
+    table.increments("sub_category_id").primary();
+    table.string("sub_category_name").notNullable().unique();
+    table.integer("category_id")
+    .unsigned()
+    .notNullable()
+    .references("category_id")
+    .inTable("category")
+    .onDelete("RESTRICT")
+    .onUpdate("RESTRICT")
+  })
   .createTable("user_information",table => {
     table.increments("user_info_id").primary();
     table.integer("user_info_income").notNullable();
@@ -53,6 +64,7 @@ exports.down = async function(knex) {
   await knex.schema
   .dropTableIfExists("activity")
   .dropTableIfExists("user_information")
+  .dropTableIfExists("sub-categories")
   .dropTableIfExists("category")
   .dropTableIfExists("users")
 };

@@ -1,6 +1,7 @@
 const express = require("express");
 const AuthRouter = require("../api/auth/auth-router");
-const path = require("path")
+const UserInfoRouter = require("../api/user-info/user-info-router");
+const path = require("path"); //eslint-disable-line
 
 //import middleware
 const helmet = require("helmet");
@@ -28,13 +29,14 @@ server.use(morgan("dev"));
 
 //routers
 server.use("/api/auth",AuthRouter); 
+server.use("/api/userInfo",UserInfoRouter);
 //routers
 
 server.get("*",(req,res,next) => {
     next({status : 404, message : "not found"});
 })
 
-server.use((error,req,res,next) => {
+server.use((error,req,res,next) => { //eslint-disable-line
     res.status(error.status || 500).json({
         message : error.message,
         stack : error.stack,

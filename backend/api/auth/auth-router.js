@@ -8,7 +8,7 @@ router.post("/register", validatePasswordSchema, validateUsernameUnique, async (
         const { user_username, user_password } = req.body;
         const hashed = bcrypt.hashSync(user_password, 10);
         const userToInsert = { user_username: user_username, user_password: hashed };
-        await UserData.add(userToInsert);
+        await UserData.add(userToInsert, req.body);
         res.status(201).json({ message: `Hello ${user_username}, nice to meet you` });
     } catch (err) { next(err) }
 })
@@ -21,7 +21,7 @@ router.post("/login", validateUsernameExists, async (req, res, next) => {
             const token = await tokenBuilder(req.user);
             res.status(200).json({message : `Welcome back ${user_username}`, token : token});
         } else {
-            next({status : 404, message : "invalid username or password"}); 
+            next({status : 401, message : "invalid username or password"}); 
         }
     } catch (err) { next(err) }
 })

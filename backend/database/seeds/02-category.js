@@ -8,6 +8,5 @@ exports.seed = async function (knex) {
   await knex('category').insert([
     { category_name: 'expenses' },
     { category_name: 'assets' },
-    { category_name: 'equity' }
   ]);
 };
