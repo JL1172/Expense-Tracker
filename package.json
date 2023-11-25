@@ -2,17 +2,21 @@
   "name": "expense-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start-client" : "cd client && npm run start",
-    "start-backend" : "cd backend && npm run server",
-    "start-backend-official" : "cd backend && npm run start",
-    "start": "concurrently \"npm run start-backend\" \"npm run start-client\""
+    "start-client": "cd client && npm run start",
+    "start-electron" : "electron . --unhandled-rejections=strict",
+    "start-backend": "cd backend && npm run server",
+    "start-backend-official": "cd backend && npm run start",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-client\" \"npm run start-electron\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "electron": "^27.1.2"
   }
 }
