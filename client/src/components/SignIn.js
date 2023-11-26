@@ -22,7 +22,7 @@ export default function SignIn() {
             <form className="space-y-6" action="#" method="POST">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Email address
+                  Username
                 </label>
                 <div className="mt-2">
                   <input
@@ -66,7 +66,7 @@ export default function SignIn() {
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
-              <div onClick={()=>directory("/register")} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              <div style={{cursor : "pointer"}} onClick={()=>directory("/register")} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                 Register Here
               </div>
             </p>

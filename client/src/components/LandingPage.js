@@ -39,10 +39,10 @@ export default function LandingPage() {
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-indigo-600">Less time managing more time doing.</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Expense Tracking Made Simple
+            Simple Track
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            This comprehensive, all-in-one service gives you the power over your finances
+          Expense Tracking Made Simple
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -72,7 +72,6 @@ export default function LandingPage() {
         }}>
           Create an Account
         </Button>
-        <span className='text-base font-semibold leading-7 text-gray-900'>or</span>
         <Button onClick={()=> directory("/login")} variant='outlined' sx = {{
           borderColor : "#4F46E5",
           color : "#4F46E5",

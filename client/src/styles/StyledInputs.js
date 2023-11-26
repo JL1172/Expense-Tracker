@@ -13,10 +13,24 @@ height : 100vh;
         transition : 50ms;
     }
 }
+#error {
+    outline : 2px solid red;
+}
 button {
     height : 2.4rem;
     display : flex;
     align-items : center;
     justify-content : center;
+}
+.password-toggles {
+    position : relative;
+}
+.icons {
+    width : 1.5rem;
+    height : 1.5rem;
+    position : absolute;
+    right : .2rem;
+    top : .4rem;
+    cursor: pointer;
 }
 `
