@@ -33,4 +33,13 @@ button {
     top : .4rem;
     cursor: pointer;
 }
+#errorMessages {
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+}
+.alerts {
+    width : 50vw;
+}
 `

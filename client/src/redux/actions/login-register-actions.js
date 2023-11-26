@@ -1,21 +1,22 @@
 import { login, register } from "../../utils/util";
 
 export const SPINNER_ON = "SPINNER_ON";
-export const LOGIN = "LOGIN"; 
-export const REGISTER =  "REGISTER";
-export const CLEAR_MESSAGES =  "CLEAR_MESSAGES";
-export const SET_ERROR_MESSAGE =  "SET_ERROR_MESSAGE";
-export const SET_SUCCESS_MESSAGE =  "SET_SUCCESS_MESSAGE";
-export const LOGIN_HANDLER =  "LOGIN_HANDLER";
-export const REGISTER_HANDLER =  "REGISTER_HANDLER";
+export const LOGIN = "LOGIN";
+export const REGISTER = "REGISTER";
+export const CLEAR_MESSAGES = "CLEAR_MESSAGES";
+export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
+export const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
+export const LOGIN_HANDLER = "LOGIN_HANDLER";
+export const REGISTER_HANDLER = "REGISTER_HANDLER";
 export const CLEAR_FORM_FIELD = "CLEAR_FORM_FIELD";
+export const SWITCH_TO_LOGIN = "SWITCH_TO_LOGIN";
 
 export const loginChangeHandler = (inputs) => {
-    return {type : LOGIN_HANDLER, payload : inputs};
+    return { type: LOGIN_HANDLER, payload: inputs };
 }
 
 export const registerChangeHandler = (inputs) => {
-    return {type : REGISTER_HANDLER, payload : inputs};
+    return { type: REGISTER_HANDLER, payload: inputs };
 }
 
 export const initiateLogin = (credentials) => dispatch => {
@@ -25,39 +26,47 @@ export const initiateLogin = (credentials) => dispatch => {
         console.log(res);
     }).catch(err => {
         console.log(err);
-    }).finally(() => {
-        dispatch(setSpinnerOn(false))
-        dispatch(clearFormField());
-    });
+    }).finally(()=>{
+        setTimeout(() => {
+            dispatch(setSpinnerOn(false));
+            dispatch(clearFormField());
+        }, 500);
+    })
 }
 export const initiateRegister = (credentials) => dispatch => {
     dispatch(setSpinnerOn(true));
     dispatch(clearMessage());
     register(credentials).then(res => {
-        console.log(res);
+        dispatch(setSuccessMessage(res.data.message));
+        dispatch(switchToLogin(true))
     }).catch(err => {
-        console.log(err);
-    }).finally(() => {
-        dispatch(setSpinnerOn(false))
-    });
+        console.log(err)
+        dispatch(setErrorMessage(err.response.data.message));
+    }).finally(()=>{
+        setTimeout(() => {
+            dispatch(setSpinnerOn(false));
+        }, 500);
+    })
 }
-
+export const switchToLogin = (bool) => {
+    return{type : SWITCH_TO_LOGIN, payload : bool};
+}
 const setSpinnerOn = (bool) => {
-    return {type : SPINNER_ON, payload : bool};
+    return { type: SPINNER_ON, payload: bool };
 }
 
 export const clearMessage = () => {
-    return {type : CLEAR_MESSAGES};
+    return { type: CLEAR_MESSAGES };
 }
 
 const setErrorMessage = (message) => {
-    return {type : SET_ERROR_MESSAGE, payload : message};
+    return { type: SET_ERROR_MESSAGE, payload: message };
 }
 
 const setSuccessMessage = (message) => {
-    return {type : SET_SUCCESS_MESSAGE, payload : message};
+    return { type: SET_SUCCESS_MESSAGE, payload: message };
 }
 
-const clearFormField = () => {
-    return {type : CLEAR_FORM_FIELD};
+export const clearFormField = () => {
+    return { type: CLEAR_FORM_FIELD };
 }

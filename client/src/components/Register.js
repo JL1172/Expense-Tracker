@@ -1,9 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyledInputs } from "../styles/StyledInputs";
 import { GlobalContext } from "../contexts/Global";
 import { connect } from "react-redux";
-import { registerChangeHandler } from "../redux/actions/login-register-actions";
+import { clearFormField, initiateRegister, registerChangeHandler } from "../redux/actions/login-register-actions";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import FallingSpinner from "./Spinner"; 
+import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Register(props) {
     const { directory } = useContext(GlobalContext);
@@ -14,9 +17,26 @@ function Register(props) {
     const change = (e) => {
         props.registerChangeHandler({ name: e.target.name, value: e.target.value })
     }
+    const nav = useNavigate();
+    const advancedRegister = () => {
+        const credentials = {
+            user_username : props.data.registerUsername,
+            user_password : props.data.registerPassword,
+            user_info_income : props.data.registerIncome,
+            user_assets : props.data.registerNetWorth
+        }
+        props.initiateRegister(credentials);
+    }
+    useEffect(()=>{
+        if (props.data.loginPage) {
+            nav("/login");
+            props.clearFormField();
+        }
+    },[props.data.loginPage])
     return (
         <StyledInputs>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            {props.data.spinnerOn && <FallingSpinner /> }
+            {!props.data.spinnerOn && <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         className="mx-auto h-10 w-auto"
@@ -29,7 +49,7 @@ function Register(props) {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6">
+                    <form onSubmit = {(e)=>e.preventDefault()} className="space-y-6">
                         <div>
                             <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                                 Username
@@ -59,8 +79,6 @@ function Register(props) {
                                     id="password"
                                     name="registerPassword"
                                     type = {visible ? "text" : "password"}
-                                    autoComplete="current-password"
-                                    required
                                     className="input-default block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                                 {visible ? <EyeIcon onClick={changeVisibility} className="icons" /> : <EyeSlashIcon onClick={changeVisibility} className="icons" />}
@@ -100,7 +118,6 @@ function Register(props) {
                                     value={props.data.registerIncome}
                                     name="registerIncome"
                                     type="number"
-                                    required
                                     className="input-default block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
@@ -118,7 +135,6 @@ function Register(props) {
                                     value={props.data.registerNetWorth}
                                     name="registerNetWorth"
                                     type="number"
-                                    required
                                     className="input-default block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
@@ -126,6 +142,8 @@ function Register(props) {
 
                         <div>
                             <button
+                                disabled = {props.data.registerPassword !== props.data.register_reenter_password}
+                                onClick={advancedRegister}
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
@@ -141,7 +159,13 @@ function Register(props) {
                         </div>
                     </p>
                 </div>
-            </div>
+                <div id = "errorMessages">
+                {props.data.errorArray && props.data.errorMessage.map(n => {
+                    return <Alert className="alerts" severity="error">{n}</Alert>
+                })}
+                {!props.data.errorArray && props.data.errorMessage && <Alert className="alerts" severity="error">{props.data.errorMessage}</Alert>}
+                </div>
+            </div>}
         </StyledInputs>
     )
 }
@@ -152,4 +176,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { registerChangeHandler })(Register);
+export default connect(mapStateToProps, { registerChangeHandler, initiateRegister, clearFormField })(Register);

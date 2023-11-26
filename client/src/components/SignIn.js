@@ -1,11 +1,18 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {StyledInputs} from "../styles/StyledInputs"; 
 import { GlobalContext } from "../contexts/Global";
+import { connect } from "react-redux";
+import { switchToLogin } from "../redux/actions/login-register-actions";
+import { Alert } from "@mui/material";
 
-export default function SignIn() {
+function SignIn(props) {
     const {directory} = useContext(GlobalContext); 
+    useEffect(()=> {
+      props.switchToLogin(false); 
+    },[])
     return (
       <StyledInputs>
+        {props.data.successMessage && <Alert severity="success">{props.data.successMessage}</Alert>}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
@@ -76,3 +83,10 @@ export default function SignIn() {
     )
   }
   
+  const mapStateToProps = state => {
+    return {
+      data : state.log_reg_state,
+    }
+  }
+
+  export default connect(mapStateToProps, {switchToLogin})(SignIn);
