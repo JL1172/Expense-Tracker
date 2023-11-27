@@ -1,6 +1,7 @@
 import { login, register } from "../../utils/util";
 
 export const SPINNER_ON = "SPINNER_ON";
+export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
 export const LOGIN = "LOGIN";
 export const REGISTER = "REGISTER";
 export const CLEAR_MESSAGES = "CLEAR_MESSAGES";
@@ -9,7 +10,9 @@ export const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
 export const LOGIN_HANDLER = "LOGIN_HANDLER";
 export const REGISTER_HANDLER = "REGISTER_HANDLER";
 export const CLEAR_FORM_FIELD = "CLEAR_FORM_FIELD";
+export const SWITCH_TO_DASH = "SWITCH_TO_DASH";
 export const SWITCH_TO_LOGIN = "SWITCH_TO_LOGIN";
+export const SET_LOGIN_SUCCESS = "SET_LOGIN_SUCCESS";
 
 export const loginChangeHandler = (inputs) => {
     return { type: LOGIN_HANDLER, payload: inputs };
@@ -23,14 +26,17 @@ export const initiateLogin = (credentials) => dispatch => {
     dispatch(setSpinnerOn(true));
     dispatch(clearMessage());
     login(credentials).then(res => {
-        console.log(res);
+        window.localStorage.setItem("token", JSON.stringify(res.data.token));
+        dispatch(loginSuccessMessage(res.data.message));
+        setTimeout(() => {
+            dispatch(switchToDash(true));
+        }, 2000)
     }).catch(err => {
-        console.log(err);
-    }).finally(()=>{
+        dispatch(loginErrorMessage(err.response.data.message));
+    }).finally(() => {
         setTimeout(() => {
             dispatch(setSpinnerOn(false));
-            dispatch(clearFormField());
-        }, 500);
+        }, 2000);
     })
 }
 export const initiateRegister = (credentials) => dispatch => {
@@ -42,14 +48,17 @@ export const initiateRegister = (credentials) => dispatch => {
     }).catch(err => {
         console.log(err)
         dispatch(setErrorMessage(err.response.data.message));
-    }).finally(()=>{
+    }).finally(() => {
         setTimeout(() => {
             dispatch(setSpinnerOn(false));
         }, 500);
     })
 }
 export const switchToLogin = (bool) => {
-    return{type : SWITCH_TO_LOGIN, payload : bool};
+    return { type: SWITCH_TO_LOGIN, payload: bool };
+}
+export const switchToDash = (bool) => {
+    return { type: SWITCH_TO_DASH, payload: bool };
 }
 const setSpinnerOn = (bool) => {
     return { type: SPINNER_ON, payload: bool };
@@ -69,4 +78,11 @@ const setSuccessMessage = (message) => {
 
 export const clearFormField = () => {
     return { type: CLEAR_FORM_FIELD };
+}
+
+const loginSuccessMessage = (message) => {
+    return { type: SET_LOGIN_SUCCESS, payload: message }
+}
+const loginErrorMessage = message => {
+    return { type: SET_LOGIN_ERROR, payload: message };
 }
