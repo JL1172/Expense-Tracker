@@ -16,6 +16,10 @@ export default function SideBar() {
     const { data, initial } = useContext(HeaderContext);
     const [routing, setRouting] = useLocalState("route", "Dashboard");
     const [toggleMenu, setToggleMenu] = useLocalState2("menu", false);
+    const [toggleProfile,setToggleProfile] = useState(false);
+    const makeProfileVisible = () => {
+        setToggleProfile(!toggleProfile);
+    }
     const changeMenu = () => {
         setToggleMenu(!toggleMenu);
     }
@@ -32,19 +36,18 @@ export default function SideBar() {
     const user = {
         name: data.user_username,
         email: data.user_username,
-        icon: <Avatar id="icon" sx={{ bgcolor: "#4F46E5" }}>{initial}</Avatar>
-
-    }
+        icon: <Avatar onClick = {makeProfileVisible} id="icon" sx={{ bgcolor: "#4F46E5" }}>{initial}</Avatar>
+    };
     const navigation = [
         { name: 'Dashboard', path: 'content', current: true },
         { name: 'Financial Activity', path: 'fin-activity', current: false },
         { name: 'Add Expense', path: 'add-expense-form', current: false },
         { name: 'Account', path: 'account-information', current: false },
-    ]
+    ];
     const userNavigation = [
         { name: 'Your Profile', },
         { name: 'Sign out' },
-    ]
+    ];
 
     return (
         <>
@@ -59,11 +62,36 @@ export default function SideBar() {
                         </div>
                     })}
                     {user.icon}
+                    <div className={toggleProfile ? "hidden-profile-drop" : "hidden-hidden"}>
+                        {userNavigation.map(n => <div key={n.name} onClick={()=>signOut(n.name)} className="profile-section">{n.name}</div>)}
+                    </div>
                 </div>
                 <div id="hiddenMenu">
                     {!toggleMenu ? <Bars3Icon onClick={changeMenu} id="menu" />
                         : <XMarkIcon onClick={changeMenu} id="menu" />}
                 </div>
+            </div>
+            <div className={!toggleMenu ? "content-menu" : "menu-drop"} >
+                {navigation.map(n => {
+                    return <div
+                        className={routing === n.name ? "current item" : "item"}
+                        onClick={() => direct(n.name)}
+                        key={n.path}>
+                        {n.name}
+                    </div>
+                })}
+                <div id="bottomSection">
+                    <div id="profile">
+                        {user.icon}
+                        @{user.name}
+                    </div>
+                    {userNavigation.map(n => {
+                        return <div key={n.name} onClick={() => signOut(n.name)} className="bottom-content">{n.name}</div>
+                    })}
+                </div>
+            </div>
+            <div id="lowerHalf">
+                <h1>{routing}</h1>
             </div>
         </>
     )
