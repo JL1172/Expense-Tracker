@@ -9,8 +9,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2b2b2b;
-  font-family: 'Roboto', sans-serif;
+  color: #7171bd;
+  font-family: 'Roboto Condensed', sans-serif !important;
 }
 
 code {

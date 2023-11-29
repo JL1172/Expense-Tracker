@@ -1,4 +1,4 @@
-import { SPINNER_SET_ON, SWITCH_TO_HOME, SET_ERROR_DASH_MESSAGE, CLEAR_MESSAGES, TRANSFER_STATE } from "../actions/user-actions"
+import { SPINNER_SET_ON, SWITCH_TO_HOME, SET_ERROR_DASH_MESSAGE, CLEAR_MESSAGES, TRANSFER_STATE, SET_ACTIVITY_STATE } from "../actions/user-actions"
 
 const initialState = {
     user_username: "",
@@ -7,6 +7,12 @@ const initialState = {
     spinnerOn: false,
     homePage: false,
     errorMessage: "",
+
+    activities : [],
+    expenses : [],
+    expenseTotal : 0,
+    percentageOfIncome : 0,
+    percentChange : 0,
 }
 
 export const user_state = (state = initialState, action) => {
@@ -24,6 +30,12 @@ export const user_state = (state = initialState, action) => {
             return ({ ...state, errorMessage: action.payload });
         case (CLEAR_MESSAGES):
             return ({ ...state, errorMessage: "" });
+        case(SET_ACTIVITY_STATE) :
+            const filteredExpenses = action.payload.filter(n => n.category_name === "expenses");
+            let sum = 0;filteredExpenses.forEach(num => sum += num.activity_amount);
+            let percentDifference = state.user_info_income - sum;
+            let delta = (sum / state.user_info_income) * 100;
+            return ({...state, activities : [action.payload], expenses : filteredExpenses, expenseTotal : sum, percentageOfIncome : percentDifference,percentChange : delta}); 
         default:
             return state;
     }

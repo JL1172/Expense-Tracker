@@ -1,37 +1,20 @@
 import { ChartBarIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { HeaderContext } from "../contexts/HeadContext";
 import { Avatar } from '@mui/material';
 import Content from "./Content";
 import Account from "./Account";
 import AddExpenseForm from './AddExpenseForm';
 import FinancialActivity from "./FinancialActivity";
-import { useLocalState } from "./customHooks/useLocal";
-import { useLocalState2 } from "./customHooks/useLocal2";
 import { useNavigate } from 'react-router-dom';
+import { useAll } from "./customHooks/useAll";
 
 
 export default function SideBar() {
     const nav = useNavigate();
     const { data, initial } = useContext(HeaderContext);
-    const [routing, setRouting] = useLocalState("route", "Dashboard");
-    const [toggleMenu, setToggleMenu] = useLocalState2("menu", false);
-    const [toggleProfile,setToggleProfile] = useState(false);
-    const makeProfileVisible = () => {
-        setToggleProfile(!toggleProfile);
-    }
-    const changeMenu = () => {
-        setToggleMenu(!toggleMenu);
-    }
-    const direct = (address) => {
-        setRouting(address);
-    }
-    const signOut = (name) => {
-        if (name === "Sign out") {
-            nav("/");
-            window.localStorage.clear();
-        }
-    }
+    const [routing,direct,toggleMenu,changeMenu,toggleProfile,makeProfileVisible,signOut] = useAll("route","menu","Dashboard",false,false);
+    const logout = (name) => {signOut(name);nav("/");}
 
     const user = {
         name: data.user_username,
@@ -63,7 +46,7 @@ export default function SideBar() {
                     })}
                     {user.icon}
                     <div className={toggleProfile ? "hidden-profile-drop" : "hidden-hidden"}>
-                        {userNavigation.map(n => <div key={n.name} onClick={()=>signOut(n.name)} className="profile-section">{n.name}</div>)}
+                        {userNavigation.map(n => <div key={n.name} onClick={()=>logout(n.name)} className="profile-section">{n.name}</div>)}
                     </div>
                 </div>
                 <div id="hiddenMenu">
@@ -86,13 +69,17 @@ export default function SideBar() {
                         @{user.name}
                     </div>
                     {userNavigation.map(n => {
-                        return <div key={n.name} onClick={() => signOut(n.name)} className="bottom-content">{n.name}</div>
+                        return <div key={n.name} onClick={() => logout(n.name)} className="bottom-content">{n.name}</div>
                     })}
                 </div>
             </div>
             <div id="lowerHalf">
                 <h1>{routing}</h1>
             </div>
+            {routing === "Dashboard" && <Content />}
+            {routing === "Account" && <Account />}
+            {routing === "Financial Activity" && <FinancialActivity />}
+            {routing === "Add Expense" && <AddExpenseForm />}
         </>
     )
 }

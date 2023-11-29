@@ -1,5 +1,5 @@
-import { renderDashBoard } from "../../utils/axiosWithAuth";
-
+import { renderDashBoard, renderExpenses } from "../../utils/axiosWithAuth";
+export const SET_ACTIVITY_STATE = "SET_ACTIVITY_STATE";
 export const SWITCH_TO_HOME = "SWITCH_TO_HOME";
 export const RENDER_DASHBOARD = "RENDER_DASHBOARD";
 export const SPINNER_SET_ON = "SPINNER_SET_ON";
@@ -25,6 +25,18 @@ export const renderDashCall = () => dispatch => {
             dispatch(spinnerOn(false));
         }, 500);
     })
+}
+export const renderExpensesCall = () => dispatch => {
+    dispatch(clearMessage());
+    renderExpenses().then(res => {
+        dispatch(setActivityState(res.data)); 
+    }).catch(err => {
+        dispatch(errorMessage(err.response.data.message));
+    })
+}
+
+const setActivityState = (data) => {
+    return {type : SET_ACTIVITY_STATE, payload : data};
 }
 
 const spinnerOn = (bool) => {
