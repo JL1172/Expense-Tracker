@@ -18,3 +18,9 @@ export const deleteExpense = (activity_id) => {
     const auth = axios.create({headers : {Authorization : token}})
     return auth.delete(`${BASE_URL}/activity/${activity_id}`);
 }
+
+export const renderAnalytics = () => {
+    const token = JSON.parse(window.localStorage.getItem("token"));
+    const auth = axios.create({headers : {Authorization : token}});
+    return auth.get(`${BASE_URL}/activity/categories`);
+}
