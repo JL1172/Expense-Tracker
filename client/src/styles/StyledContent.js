@@ -30,8 +30,10 @@ export const StyledContent = styled.div`
     flex-wrap : wrap;
     padding-top : 2rem;
     .container {
+        padding-top : .5rem;
+        padding-bottom : .3rem;
         width : 35rem; 
-        height : 32vh;
+        height : 32vh ;
         border-radius : 5px;
         box-shadow : 0 0 .2em whitesmoke;
         display : flex;
@@ -64,8 +66,7 @@ export const StyledContent = styled.div`
         font-size : 20px;
     }
     .last {
-        margin-top : 2rem;
-        margin-bottom : 2rem;
+        margin : auto;
         box-shadow : 0 0 .2em whitesmoke;
         display : flex;
         flex-direction : column;
@@ -419,7 +420,7 @@ export const StyledContent = styled.div`
         transform : scaleX(250%);
         z-index : 2;
         transform-origin : left;
-        border-bottom-right-radius : 4rem;
+        border-bottom-right-radius : 2.5rem;
         transition : .2s ease-in-out;
         background-color : #4f46e5;
     }
@@ -443,6 +444,13 @@ export const StyledContent = styled.div`
         content : "";
         width : 100%;
         border-bottom-right-radius : 0;
+    }
+    .container {
+        height : 50vh;
+    }
+    .last {
+        height : fit-content;
+        margin-bottom : 1rem;
     }
     #confirm {
         position : absolute;
