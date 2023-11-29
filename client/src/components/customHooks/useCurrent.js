@@ -2,9 +2,13 @@ import { useState } from "react"
 
 
 export const useCurrent = (state) => {
-    const [current,setCurrent] = useState("");
+    const [current, setCurrent] = useState("");
     const change = (version) => {
-        setCurrent(version);
+        if (version === current) {
+            setCurrent("");
+        } else {
+            setCurrent(version);
+        }
     }
-    return [current,change];
+    return [current, change];
 }

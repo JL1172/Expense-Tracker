@@ -12,6 +12,15 @@ const kf = keyframes`
     transform : rotate(0);
 }
 `
+const fadeIn = keyframes`
+0% {
+    opacity : 0;
+}
+100% {
+    opacity : 1;
+}
+`
+
 
 export const StyledContent = styled.div`
     width : 100%;
@@ -152,13 +161,13 @@ export const StyledContent = styled.div`
         color : #111827;
         position : absolute;
         left : 2rem;
-        z-index : 3;
+        z-index : 4;
         width : 2rem;
         cursor: pointer;
     }
     #pencil {
         position : absolute;
-        z-index : 3;
+        z-index : 4;
         cursor: pointer;
         color : #111827;
         left : 7rem;
@@ -167,9 +176,105 @@ export const StyledContent = styled.div`
     #trash, #pencil {
         animation : ${kf} .3s ease-in-out forwards;
         &:hover {
-            transform : scale(105%);
             color : pink;
             transition : 100ms;
+        }
+    }
+    .non-removal::after {
+        content : "";
+        position : absolute;
+        border : 2px solid #7171bd;
+        left : 0;
+        width : 5rem;
+        height : 100%;
+        transform : scaleX(0);
+        z-index : 10;
+        transform-origin : left;
+        border-bottom-right-radius : 4rem;
+        transition : .2s ease-in-out;
+        background-color : #7171bd;
+    }
+    .removal::after {
+        content : "";
+        position : absolute;
+        border : 2px solid #7171bd;
+        left : 0;
+        width : 5rem;
+        height : 100%;
+        z-index : 10;
+        transform-origin : left;
+        border-bottom-right-radius : 4rem;
+        transition : .2s ease-in-out;
+        background-color : #7171bd;
+        width : 100%;
+    }
+    #confirm {
+        position : absolute;
+        z-index : 11;
+        cursor: pointer;
+        color : #111827;
+        left : 0;
+        color : white;
+        display : flex;
+        align-items : center;
+        justify-content : space-evenly;
+        min-width : 95%;
+        width : fit-content;
+        span {
+            display : flex;
+            justify-content : center;
+            width : 9rem;
+            border-radius : 10px;
+            transition : 100ms;
+            &:hover {
+                color : #1f2937;
+                background-color : #4f46e5;
+                transition : 300ms;
+            }
+        }
+    }
+
+    .seen-confirm {
+        opacity : 0;
+        animation : ${fadeIn} .1s ease-in-out forwards;
+        animation-delay : .3s;
+    }
+    #button {
+            display : flex;
+            justify-content : center;
+            width : 9rem;
+            border-radius : 10px;
+            transition : 100ms;
+            &:hover {
+                background-color : #4f46e5;
+                transition : 300ms;
+                color : #1f2937;
+            }
+        }
+    #xMark {
+        width : 2rem;
+        margin-right : .4rem;
+        transition : 100ms;
+        z-index : 11;
+        &:hover {
+            transform : scale(110%);
+            transition : 100ms;
+        }
+    }
+    #xMark2 {
+        width : 2rem;
+        margin-left : .4rem;
+        transition : 100ms;
+        z-index : 11;
+        &:hover {
+            transform : scale(110%);
+            transition : 100ms;
+        }
+    }
+
+    @media screen and (min-width: 1696px) {
+        .container, .last {
+            width : 100vw;
         }
     }
     @media screen and (max-width: 1136px){
@@ -193,6 +298,10 @@ export const StyledContent = styled.div`
         transition : .2s ease-in-out;
         background-color : #4f46e5;
     }
+    .removal::after {
+        content : "";
+        width : 100%;
+    }
     }
     @media screen and (max-width : 1000px){
         .hidden-section {
@@ -214,6 +323,76 @@ export const StyledContent = styled.div`
         transition : .2s ease-in-out;
         background-color : #4f46e5;
     }
+    .removal::after {
+        content : "";
+        width : 100%;
+    }
+    }
+    @media screen and (max-width: 500px) {
+        #confirm {
+        position : absolute;
+        z-index : 11;
+        cursor: pointer;
+        color : #111827;
+        left : 0;
+        color : white;
+        display : flex;
+        align-items : center;
+        justify-content : space-evenly;
+        min-width : 95%;
+        width : fit-content;
+        span {
+            display : flex;
+            justify-content : center;
+            width : 7rem;
+            border-radius : 10px;
+            transition : 100ms;
+            &:hover {
+                color : #1f2937;
+                background-color : #4f46e5;
+                transition : 300ms;
+            }
+        }
+    }
+
+    .seen-confirm {
+        opacity : 0;
+        animation : ${fadeIn} .1s ease-in-out forwards;
+        animation-delay : .3s;
+    }
+    #button {
+            display : flex;
+            justify-content : center;
+            width : 7rem;
+            border-radius : 10px;
+            transition : 100ms;
+            &:hover {
+                background-color : #4f46e5;
+                transition : 300ms;
+                color : #1f2937;
+            }
+        }
+    #xMark {
+        width : 2rem;
+        margin-right : .4rem;
+        transition : 100ms;
+        z-index : 11;
+        &:hover {
+            transform : scale(110%);
+            transition : 100ms;
+        }
+    }
+    #xMark2 {
+        width : 2rem;
+        margin-left : .4rem;
+        transition : 100ms;
+        z-index : 11;
+        &:hover {
+            transform : scale(110%);
+            transition : 100ms;
+        }
+    }
+
     }
     @media screen and (max-width: 480px){
         #trash {
@@ -244,6 +423,10 @@ export const StyledContent = styled.div`
         transition : .2s ease-in-out;
         background-color : #4f46e5;
     }
+    .removal::after {
+        content : "";
+        width : 100%;
+    }
         .container {
            height : 44vh;
         } 
@@ -255,4 +438,75 @@ export const StyledContent = styled.div`
             display : none;
         }
     }
+    @media screen and (max-width : 480px) {
+        .removal::after {
+        content : "";
+        width : 100%;
+        border-bottom-right-radius : 0;
+    }
+    #confirm {
+        position : absolute;
+        z-index : 11;
+        cursor: pointer;
+        color : #111827;
+        left : 0;
+        color : white;
+        display : flex;
+        align-items : center;
+        justify-content : space-evenly;
+        min-width : 100%;
+        width : fit-content;
+        span {
+            display : flex;
+            justify-content : center;
+            width : 5rem;
+            border-radius : 10px;
+            transition : 100ms;
+            &:hover {
+                color : #1f2937;
+                background-color : #4f46e5;
+                transition : 300ms;
+            }
+        }
+    }
+
+    .seen-confirm {
+        opacity : 0;
+        animation : ${fadeIn} .1s ease-in-out forwards;
+        animation-delay : .3s;
+    }
+    #button {
+            display : flex;
+            justify-content : center;
+            width : 5rem;
+            border-radius : 10px;
+            transition : 100ms;
+            &:hover {
+                background-color : #4f46e5;
+                transition : 300ms;
+                color : #1f2937;
+            }
+        }
+    #xMark {
+        width : 2rem;
+        margin-right : .4rem;
+        transition : 100ms;
+        z-index : 11;
+        &:hover {
+            transform : scale(110%);
+            transition : 100ms;
+        }
+    }
+    #xMark2 {
+        width : 2rem;
+        margin-left : .4rem;
+        transition : 100ms;
+        z-index : 11;
+        &:hover {
+            transform : scale(110%);
+            transition : 100ms;
+        }
+    }
+
+}
 `

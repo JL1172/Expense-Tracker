@@ -1,4 +1,5 @@
-import { renderDashBoard, renderExpenses } from "../../utils/axiosWithAuth";
+import { deleteExpense, renderDashBoard, renderExpenses } from "../../utils/axiosWithAuth";
+export const FIRST_STEP_DELETE = "FIRST_STEP_DELETE";
 export const SET_ACTIVITY_STATE = "SET_ACTIVITY_STATE";
 export const SWITCH_TO_HOME = "SWITCH_TO_HOME";
 export const RENDER_DASHBOARD = "RENDER_DASHBOARD";
@@ -35,6 +36,19 @@ export const renderExpensesCall = () => dispatch => {
     })
 }
 
+export const finalizeDelete = () => dispatch => {
+    dispatch(clearMessage());
+    deleteExpense().then(res => {
+        console.log(res);
+        dispatch(renderDashCall());
+        dispatch(renderExpensesCall());
+    }).catch(err => {
+        console.error(err);
+        dispatch(errorMessage(err.response.data.message));
+        alert(err.response.data.message); 
+    })
+}
+
 const setActivityState = (data) => {
     return {type : SET_ACTIVITY_STATE, payload : data};
 }
@@ -57,4 +71,9 @@ export const clearMessage = () => {
 }
 const setDashState = (dataFromApi) => {
     return { type: TRANSFER_STATE, payload: dataFromApi };
+}
+
+export const firstStepDelete = (index) => {
+    console.log("hello")
+    return {type : FIRST_STEP_DELETE, payload : index}
 }
