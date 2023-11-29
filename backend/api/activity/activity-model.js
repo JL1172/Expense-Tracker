@@ -34,21 +34,33 @@ async function remove(id) {
     await db("activity").del().where("activity_id", id);
 }
 
-async function findCategoryFrequency() {
+async function findCategoryFrequency(id,query) {
+    const {filter = null} = query;
+    if (!filter) {
+        const result = await db("sub_categories as s")
+        .select("s.sub_category_name")
+        .count("s.sub_category_id as count")
+        .sum("a.activity_amount as total")
+        .leftJoin("activity as a","a.sub_category_id","s.sub_category_id")
+        .leftJoin("category as c","c.category_id","s.category_id")
+        .where("c.category_name","expenses")
+        .where("a.user_id", id)
+        .groupBy("s.sub_category_name")
+        return result;
+    } else {
+        const result = await db("sub_categories as s")
+        .leftJoin("activity as a","a.sub_category_id","s.sub_category_id")
+        .leftJoin("category as c","c.category_id","s.category_id")
+        .where("c.category_name","expenses")
+        .where("a.user_id", id)
+        .where("s.sub_category_name",filter)
+        return result;
+    }
     /*
     raw sql : 
     select s.sub_category_name, count(a.sub_category_id) as count from public.sub_categories as s
     left join public.activity as a on a.sub_category_id = s.sub_category_id group by (s.sub_category_name);
     */
-   const result = await db("sub_categories as s")
-   .select("s.sub_category_name")
-   .count("s.sub_category_id as count")
-   .sum("a.activity_amount as total")
-   .leftJoin("activity as a","a.sub_category_id","s.sub_category_id")
-   .leftJoin("category as c","c.category_id","s.category_id")
-   .where("c.category_name","expenses")
-   .groupBy("s.sub_category_name")
-   return result;
 }
 
 module.exports = {

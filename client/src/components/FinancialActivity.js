@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, CurrencyDollarIcon, CreditCardIcon, TrashIcon, PencilSquareIcon, ArrowSmallLeftIcon, XMarkIcon, ArrowSmallRightIcon } from "@heroicons/react/24/outline";
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, CurrencyDollarIcon, CreditCardIcon, TrashIcon, PencilSquareIcon, ArrowSmallLeftIcon, XMarkIcon, ArrowSmallRightIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 import { useCurrent } from "./customHooks/useCurrent";
 import { finalizeDelete, firstStepDelete, renderExpensesCall } from "../redux/actions/user-actions";
 import { StyledFin } from "../styles/StyledFin";
@@ -18,20 +18,31 @@ function FinancialActivity(props) {
         props.renderExpensesCall();
         props.initiateFetchAnalytics();
     }, []);
+    const advancedFilter = (query) => {
+        const insertion = `filter=${query}`;
+        props.initiateFetchAnalytics(insertion);
+    }
+    const reset = () => {
+        props.renderExpensesCall();
+        props.initiateFetchAnalytics();
+    }
     return (
         <StyledFin>
             <div className="container first-container">
                 <div className="heading-box">Categories</div>
-                <div id = "category-rows">
+                <div id="category-rows">
                     {props.analytics.analytics.map((n, i) => {
-                        return <div className="category-analytics" key={i}>{addIcon(n.sub_category_name)}{n.sub_category_name}</div>
+                        return <a onClick={() => advancedFilter(n.sub_category_name)} key={i} href="#transactions"><div className="category-analytics">{addIcon(n.sub_category_name)}{n.sub_category_name}</div></a>
                     })}
                 </div>
                 <AnalyticsContext.Provider value={{ data: props.analytics }}><CategoryChart /></AnalyticsContext.Provider>
 
             </div>
-            <div className="container last">
-                <div className="heading-box-two" >Latest Activity <CurrencyDollarIcon style={{ width: "1.5rem", height: "1.5rem" }} /></div>
+            <div id="transactions" className="container last">
+                <div className="heading-box-two" ><span>Latest Activity <CurrencyDollarIcon style={{ width: "1.5rem", height: "1.5rem" }} /></span>
+                    {!props.analytics.filterOn ? <span className="unactive-filter" id="showAll"><AdjustmentsHorizontalIcon style={{ width: "1.5rem", height: "1.5rem" }} />Add Filter</span> 
+                    : <span onClick={reset} id="showAll" className="active-filter"><XMarkIcon style={{ width: "1.5rem", height: "1.5rem" }} />Remove Filter</span>}
+                    </div>
                 {props.data.activities[0] && props.data.activities[0].map((n, i) => {
                     if (i < Infinity) {
                         return <div onClick={() => change(i)} id={current === i ? "focused" : props.data.firstDelete === i ? "focused" : "notFocused"} className={props.data.firstDelete === i ? "activities removal" : "activities non-removal"} key={i}>

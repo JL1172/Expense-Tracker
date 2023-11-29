@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {restrict} = require("../auth/auth-middleware");
-const {validateActivityPost,validateCategory,validateActivityPut,validateDelete} = require("./activity-middleware");
+const {validateActivityPost,validateCategory,queryValidation,validateActivityPut,validateDelete} = require("./activity-middleware");
 const ActivityData = require("./activity-model");
 
 router.get("/",restrict,async(req,res,next) => {
@@ -9,12 +9,13 @@ router.get("/",restrict,async(req,res,next) => {
         res.status(200).json(result); 
     } catch (err) {next(err)}
 })
-router.get("/categories",restrict,async(req,res,next) => {
+router.get("/categories",restrict,queryValidation,async(req,res,next) => {
     try{
-        const result = await ActivityData.findCategoryFrequency();
+        const result = await ActivityData.findCategoryFrequency(req.decodedJwt.subject[0].user_id,req.query);
         res.status(200).json(result);
     } catch(err) {next(err)}
 })
+
 router.post("/",restrict,validateActivityPost,validateCategory,async(req,res,next) => {
     try {
         const addedActivity = await ActivityData.addActivity(req.decodedJwt,req.body);

@@ -1,8 +1,9 @@
-import { ANALYTIC_ERROR, CLEAR_MESSAGE_NO3,SET_ANALYTIC_STATE } from "../actions/fin-actions";
+import { ANALYTIC_ERROR, CLEAR_MESSAGE_NO3,FILTER_ON,SET_ANALYTIC_STATE } from "../actions/fin-actions";
 
 const initialState = {
     analytics : [],
     errorMessage : "",
+    filterOn : false,
 }
 
 export const fin_state = (state = initialState, action) => {
@@ -12,7 +13,9 @@ export const fin_state = (state = initialState, action) => {
         case(ANALYTIC_ERROR) :
             return({...state, errorMessage : action.payload});
         case(SET_ANALYTIC_STATE) :
-            return ({...state, analytics : action.payload})
+            return ({...state, analytics : action.payload});
+        case(FILTER_ON) :
+            return ({...state, filterOn : action.payload})
         default : 
             return state;
     }

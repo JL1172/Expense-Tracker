@@ -30,14 +30,6 @@ export const StyledFin = styled.div`
     flex-direction : column;
     flex-wrap : wrap;
     padding-top : 2rem;
-    .cat-icons {
-        width : 2rem;
-        color : #4f46e5;
-        &:hover {
-            color : #7171bd;
-            transition : 100ms;
-        }
-    }
     .custom-tooltip {
         text-align : center;
         min-width : 7rem;
@@ -72,27 +64,41 @@ export const StyledFin = styled.div`
         margin : auto;
         margin-bottom : 3rem;
     }
-    .category-analytics {
-        display : flex;
-        align-items : center;
-        cursor: pointer;
-        &:hover {
-            color : #7171bd;
-            transition : 100ms;
-        }
+    .cat-icons {
+        width : 2rem;
     }
     #category-rows {
         width : 100%;
         justify-content : space-around;
         display : flex;
         margin : 2rem;
-
+        a,div {
+            color : #4f46e5;
+            text-decoration : none;
+            &:hover {
+                color : #d8d8dd;
+                transition : 50ms ease-in-out;
+                transition-property : color;
+            }
+        }
+    }
+    .category-analytics {
+        display : flex;
+        align-items : center;
+        transition : .2s ease-in-out;
+        cursor: pointer;
+        border-radius : 5px;
+        width : 10rem;
+        justify-content : center;
+        &:hover {
+            background-color : #4f46e5;
+            transition : .2s ease-in-out;
+        }
     }
     .heading-box {
         color : gray;
         font-size : 20px;
-        margin-left : .8rem;
-        margin-top : 1rem;
+        margin : 1rem;
     }
 
     .last {
@@ -118,6 +124,27 @@ export const StyledFin = styled.div`
         display : flex;
         margin-top : 1rem;
         align-items : center;
+        width : 100%;
+        justify-content : space-between;
+        span { 
+            display : flex;
+            align-items : center;
+        }
+        #showAll {
+            cursor: pointer;
+            
+        }
+        .active-filter, .unactive-filter {
+            margin-right : 5px;
+            color : #d3d3d3;
+            padding : .4rem;
+            border-radius : 5px;
+            cursor: pointer;
+            &:hover {
+                background-color : #2e353d;
+                transition : 50ms;
+            }
+        }
     }
 
 
@@ -315,12 +342,22 @@ export const StyledFin = styled.div`
         }
     }
 
+    .first-container {
+        height : 60vh;
+    }
+
     @media screen and (min-width: 1696px) {
         .container, .last {
             width : 100vw;
         }
     }
     @media screen and (max-width: 1136px){
+        .first-container {
+            height : 50vh;
+        }
+        #category-rows {
+            display : none;
+        }
         .container {
             margin-bottom : 2rem;
         } 

@@ -50,7 +50,7 @@ export const finalizeDelete = (activity_id) => dispatch => {
     })
 }
 
-const setActivityState = (data) => {
+export const setActivityState = (data) => {
     return {type : SET_ACTIVITY_STATE, payload : data};
 }
 
