@@ -13,5 +13,13 @@ exports.seed = async function(knex) {
     {sub_category_id: 1, user_id : 2, activity_amount : 15.99, activity_description : "netflix subscription"},
     {sub_category_id: 5, user_id : 1, activity_amount : 150, activity_description : "doctor visit"},
     {sub_category_id: 5, user_id : 1, activity_amount : 500, activity_description : "dentist"},
+
+    {sub_category_id: 3, user_id : 1, activity_amount : 1500, activity_description : "car repair"},
+    {sub_category_id: 5, user_id : 1, activity_amount : 35, activity_description : "immunizations"},
+    {sub_category_id: 6, user_id : 3, activity_amount : 200, activity_description : "water bill"},
+    {sub_category_id: 5, user_id : 2, activity_amount : 20, activity_description : "gym membership"},
+    {sub_category_id: 1, user_id : 2, activity_amount : 6, activity_description : "spotfiy"},
+    {sub_category_id: 3, user_id : 1, activity_amount : 32, activity_description : "gas"},
+    {sub_category_id: 2, user_id : 1, activity_amount : 500, activity_description : "lunch"},
   ]);
 };

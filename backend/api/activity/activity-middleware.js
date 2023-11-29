@@ -60,7 +60,7 @@ async function validateDelete(req,res,next) {
 async function validateCategory(req,res,next) {
     try {
         const isValidCat = await db("category").where("category_id", req.body.category_id).first();
-        const isValidSub = await db("sub-categories").where("sub_category_id",req.body.sub_category_id).first();
+        const isValidSub = await db("sub_categories").where("sub_category_id",req.body.sub_category_id).first();
         if (!isValidCat || !isValidSub) {
             next({status : 422, message : "Category and sub category must exist to be used. To create a sub category, click add sub category"})
         } else {
