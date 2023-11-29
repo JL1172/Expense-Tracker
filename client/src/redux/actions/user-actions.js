@@ -36,16 +36,17 @@ export const renderExpensesCall = () => dispatch => {
     })
 }
 
-export const finalizeDelete = () => dispatch => {
+export const finalizeDelete = (activity_id) => dispatch => {
     dispatch(clearMessage());
-    deleteExpense().then(res => {
-        console.log(res);
+    deleteExpense(activity_id).then(res => {
         dispatch(renderDashCall());
         dispatch(renderExpensesCall());
     }).catch(err => {
         console.error(err);
         dispatch(errorMessage(err.response.data.message));
         alert(err.response.data.message); 
+    }).finally(()=>{
+        dispatch(firstStepDelete(null))
     })
 }
 
@@ -74,6 +75,5 @@ const setDashState = (dataFromApi) => {
 }
 
 export const firstStepDelete = (index) => {
-    console.log("hello")
     return {type : FIRST_STEP_DELETE, payload : index}
 }

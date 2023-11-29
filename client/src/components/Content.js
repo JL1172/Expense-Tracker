@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StyledContent } from "../styles/StyledContent";
 import { useEffect } from "react";
-import { firstStepDelete, renderExpensesCall } from "../redux/actions/user-actions";
+import { finalizeDelete, firstStepDelete, renderExpensesCall } from "../redux/actions/user-actions";
 import Chart from "./Chart";
 import { ChartContext } from "../contexts/ChartContext";
 import ExpenseChart from "./BarChart";
@@ -25,7 +25,11 @@ function Content(props) {
     monetary2 = monetary2.reverse().join("");
     useEffect(() => {
         props.renderExpensesCall();
-    }, [])
+    }, []);
+    const advancedDelete = async(activity_id) => {
+        await props.finalizeDelete(activity_id);
+        change("");
+    }
     return (
         <StyledContent>
             <div className="container">
@@ -61,7 +65,7 @@ function Content(props) {
                             {props.data.firstDelete === i && <div id="confirm"
                             ><span onClick={() => props.firstStepDelete()} className={props.data.firstDelete === i ? "seen-confirm" : ""} >< ArrowSmallLeftIcon id="xMark" />No</span>
                             <div className={props.data.firstDelete === i ? "seen-confirm" : ""}>Confirm Deletion?</div>
-                            <span className={props.data.firstDelete === i ? "seen-confirm" : ""} id="button">Yes<ArrowSmallRightIcon id="xMark2" /></span></div>}
+                            <span onClick={()=> advancedDelete(n.activity_id)} className={props.data.firstDelete === i ? "seen-confirm" : ""} id="button">Yes<ArrowSmallRightIcon id="xMark2" /></span></div>}
                             {current === i && <TrashIcon onClick={() => props.firstStepDelete(i)} id="trash" />}
                             {current === i && <PencilSquareIcon id="pencil" />}
                         </div>
@@ -79,4 +83,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete })(Content);
+export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete })(Content);

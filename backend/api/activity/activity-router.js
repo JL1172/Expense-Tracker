@@ -21,9 +21,9 @@ router.put("/",restrict,validateActivityPut,validateCategory,async(req,res,next)
         res.status(201).json({data : addedActivity, message : req.tolerance_notice}); 
     } catch (err) {next(err)}
 })
-router.delete("/",restrict,validateDelete,async(req,res,next) => {
+router.delete("/:id",restrict,validateDelete,async(req,res,next) => {
     try {
-        await ActivityData.remove(Number(req.body.activity_id));
+        await ActivityData.remove(Number(req.params.id));
         res.status(200).json({message : "successfully deleted"}); 
     } catch (err) {next(err)}
 })

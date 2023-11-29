@@ -13,8 +13,8 @@ export const renderExpenses = () => {
     return auth.get(`${BASE_URL}/activity`);
 }
 
-export const deleteExpense = () => {
+export const deleteExpense = (activity_id) => {
     const token = JSON.parse(window.localStorage.getItem("token"));
     const auth = axios.create({headers : {Authorization : token}})
-    return auth.delete(`${BASE_URL}/activity`);
+    return auth.delete(`${BASE_URL}/activity/${activity_id}`);
 }

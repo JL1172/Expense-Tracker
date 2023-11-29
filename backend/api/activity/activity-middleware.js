@@ -44,7 +44,8 @@ async function validateActivityPut(req,res,next) {
 }
 async function validateDelete(req,res,next) {
     try {
-        const {activity_id} = req.body;
+        const {id} = req.params;
+        const activity_id = id;
         if (!activity_id) next({status : 400, message : "activity id needed"});
         else {
             if (isNaN(activity_id)) next({status : 400, message : "not a valid id"});
