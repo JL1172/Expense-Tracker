@@ -7,7 +7,7 @@ async function findAll(query,user_id) {
     .join("sub-categories as s","s.sub_category_id","a.sub_category_id")
     .join("users as u","u.user_id","a.user_id")
     .join("category as c","c.category_id","s.category_id")
-    .select("a.activity_description","a.activity_amount","u.user_id","u.user_username","c.category_id","c.category_name","s.sub_category_id","s.sub_category_name","a.activity_id")
+    .select("a.activity_description","a.activity_amount","u.user_id","u.user_username","c.category_id","c.category_name","s.sub_category_id","s.sub_category_name","a.activity_id","a.created_at")
     .limit(limit)
     .orderBy(sortby,sortdir)
     .offset(offset)
