@@ -134,8 +134,8 @@ export const StyledFin = styled.div`
             cursor: pointer;
             position : relative;
             
-        }
-        .active-filter-no2, .unactive-filter-no2 {
+        }}
+        /* .active-filter-no2, .unactive-filter-no2 {
             margin-right : 5px;
             color : #d3d3d3;
             padding : .4rem;
@@ -149,50 +149,71 @@ export const StyledFin = styled.div`
                 background-color : #2e353d;
                 transition : 50ms;
             }
-        }
+        }*/
         .active-background-no2 {
             background-color : #111827;
+            width : 10rem;
+            display : flex;
+            justify-content : center;
+            align-items : center;
+            padding : .2rem;
+            border-radius : 5px;
+            transition : 500ms;
+            cursor: pointer;
             &:hover {
                 background-color : #111827;
             }
         }
-        #sub-ids {
-            display : flex; 
-            align-items : center;
+        .unactive-background-no2 {
+            width : 10rem;
+            display : flex;
             justify-content : center;
-            width : 100%;
+            align-items : center;
+            padding : .2rem;
+            border-radius : 5px;
+            cursor: pointer;
+            transition : 500ms;
+            &:hover {
+                background-color : #2e353d;
+                transition : 200ms;
+            }
         }
-        
-        .unactive-filter-no2::before {
-            content : "";
+        .radio {
+          
+        }
+        .off {
+            opacity : 1;
+            background-color : transparent;
+            backdrop-filter : blur(10px);
+            outline : 2px solid #4f46e5;
+            border-radius : 5px;
             position : absolute;
-            background-color : whitesmoke;
-            box-shadow : 0 0 .2em whitesmoke;
-            width : 25rem;
-            height : 10rem;
-            top : 3rem;
-            right : -.2rem;
-            z-index : 12;
-            transform : scaleY(0%);
+            transform : scaleY(0);
+            width : 10rem;
+            right : 0;
+            top : 5rem;
+            height : 15rem;
+            z-index : 13;
             transform-origin : top;
-            transition : 150ms;
+            transition : .2s;
+        } 
+        .on {
+            opacity : 1;
+            background-color : transparent;
+            backdrop-filter : blur(10px);
+            outline : 2px solid #4f46e5;
+            border-radius : 5px;
+            position : absolute;
+            transform : scaleY(100%);
+            width : 30rem;
+            right : 0;
+            top : 5rem;
+            height : 15rem;
+            z-index : 13;
+            transform-origin : top;
+            transition : .2s;
         }
-       .active-filter-no2::before {
-        content : "";
-        position : absolute;
-        background-color : whitesmoke;
-        box-shadow : 0 0 .2em whitesmoke;
-        width : 25rem;
-        height : 10rem;
-        right : -.2rem;
-        z-index : 12;
-        top : 3rem;
-        transform : scaleY(100%);
-        transform-origin : top;
-        transition : 150ms;
-    }
-    }
-
+       /*  */
 
     .activities {
         cursor: pointer;
@@ -393,6 +414,33 @@ export const StyledFin = styled.div`
     }
 
     @media screen and (min-width: 1696px) {
+        .off {
+          position : absolute;
+          transform : scaleY(0);   
+          width : 10vw;
+          height : 10rem;
+          top : 5rem;
+          right : 0;
+          z-index : 13;
+          transform-origin : top;
+          transition : .2s;
+          opacity : 0;
+        } 
+        .on {
+            opacity : 1;
+            background-color : transparent;
+            backdrop-filter : blur(10px);
+            outline : 2px solid #4f46e5;
+            border-radius : 5px;
+            position : absolute;
+            transform : scaleY(100%);
+            width : 100%;
+            top : 5rem;
+            height : 15rem;
+            z-index : 13;
+            transform-origin : top;
+            transition : .2s;
+        }
         .container, .last {
             width : 100vw;
         }
@@ -454,8 +502,39 @@ export const StyledFin = styled.div`
         content : "";
         width : 100%;
     }
+   
+    }
+    @media screen and (max-width: 600px) {
+        .off {
+          position : absolute;
+          transform : scaleY(0);   
+          width : 10vw;
+          height : 10rem;
+          top : 5rem;
+          right : 0;
+          z-index : 13;
+          transform-origin : top;
+          transition : .2s;
+          opacity : 0;
+        } 
+        .on {
+            opacity : 1;
+            background-color : transparent;
+            backdrop-filter : blur(10px);
+            outline : 2px solid #4f46e5;
+            border-radius : 5px;
+            position : absolute;
+            transform : scaleY(100%);
+            width : 100%;
+            top : 5rem;
+            height : 15rem;
+            z-index : 13;
+            transform-origin : top;
+            transition : .2s;
+        }
     }
     @media screen and (max-width: 500px) {
+       
         #confirm {
         position : absolute;
         z-index : 11;
@@ -519,7 +598,6 @@ export const StyledFin = styled.div`
             transition : 100ms;
         }
     }
-
     }
     @media screen and (max-width: 480px){
         #trash {
@@ -641,31 +719,5 @@ export const StyledFin = styled.div`
             transition : 100ms;
         }
     }
-.unactive-filter-no2::before {
-    content : "";
-    position : absolute;
-    background-color : whitesmoke;
-    box-shadow : 0 0 .2em whitesmoke;
-    width : 90vw !important;
-    right : 0 !important;
-    z-index : 12;
-    top : 3rem;
-    transform : scaleY(0);
-    transform-origin : top;
-    transition : 150ms;
-}
-.active-filter-no2::before {
-    content : "";
-    position : absolute;
-    background-color : whitesmoke;
-    box-shadow : 0 0 .2em whitesmoke;
-    width : 90vw !important;
-    right : 0 !important;
-    z-index : 12;
-    top : 3rem;
-    transform : scaleY(90%);
-    transform-origin : top;
-    transition : 150ms;
-}
 }
 `

@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import { AnalyticsContext } from "../contexts/AnalyticsContext";
 import { initiateFetchAllCategories, initiateFetchAnalytics } from "../redux/actions/fin-actions";
 import CategoryChart, { addIcon } from "./CategoryChart";
+import { RadioGroup } from "@headlessui/react";
+import RadioGroupContext from "@mui/material/RadioGroup/RadioGroupContext";
+import { FormControlLabel, Radio } from "@mui/material";
 
 function FinancialActivity(props) {
     const [current, change] = useCurrent("");
@@ -46,20 +49,23 @@ function FinancialActivity(props) {
 
             </div>
             <div id="transactions" className="container last">
+
                 <div className="heading-box-two" ><span>Latest Activity <CurrencyDollarIcon style={{ width: "1.5rem", height: "1.5rem" }} /></span>
-                    {props.analytics.filterOn ?
-                        <span
-                            className={"active-background-no2 unactive-filter-no2"} id="showAll">
-                            <div onClick={reset} id="sub-ids"><XMarkIcon style={{ width: "1.5rem", height: "1.5rem" }} />Remove Filter</div>
-                        </span>
-                        :
-                        <span
-                            className={!props.analytics.filterOnTwo ? "unactive-filter-no2 " : "active-filter-no2 active-background-no2"} id="showAll">
-                            {!props.analytics.filterOnTwo ? <div onClick={ternaryHandler} id="sub-ids"><AdjustmentsHorizontalIcon style={{ width: "1.5rem", height: "1.5rem" }} />Add Filter</div>
-                                :
-                                <div onClick={ternaryHandler} id="sub-ids"><XMarkIcon style={{ width: "1.5rem", height: "1.5rem" }} />Remove Filter</div>}
-                        </span>}
+                   {props.analytics.filterOn && <span onClick={reset} className = {props.analytics.filterOn ? "active-background-no2" : "unactive-background-no2"}><XMarkIcon style={{width : "1.5rem"}} />Remove Filter</span> }
+                   {!props.analytics.filterOn && !props.analytics.filterOnTwo && <span onClick={ternaryHandler} className = {props.analytics.filterOnTwo ? "active-background-no2" : "unactive-background-no2"}><AdjustmentsHorizontalIcon style={{width : "1.5rem"}} />Add Filter</span>}
+                   {!props.analytics.filterOn && props.analytics.filterOnTwo && <span onClick={ternaryHandler} className = {props.analytics.filterOnTwo ? "active-background-no2" : "unactive-background-no2"}><XMarkIcon style={{width : "1.5rem"}} />
+                   Remove Filter
+                   </span>}
+                   <div 
+                   className = {!props.analytics.filterOn && props.analytics.filterOnTwo ? "on" : "off"}>
+                    <span >
+                        {props.analytics.analytics.map((n,i) => {
+                            return <Radio className="radio" key = {i} name = "radio-group" value = {n.sub_category_name} />
+                        })}
+                    </span>
+                   </div>
                 </div>
+
                 {props.data.activities[0] && props.data.activities[0].map((n, i) => {
                     if (i < Infinity) {
                         return <div onClick={() => change(i)} id={current === i ? "focused" : props.data.firstDelete === i ? "focused" : "notFocused"} className={props.data.firstDelete === i ? "activities removal" : "activities non-removal"} key={i}>

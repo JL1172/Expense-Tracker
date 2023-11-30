@@ -29,13 +29,8 @@ export const initiateFetchAnalytics = (query) => dispatch => {
 
 export const initiateFetchAllCategories = () => dispatch => {
     dispatch(setFilterOn(false)) // might be an issue  
-    dispatch(clearMessage());
-    readAllCategories().then(res => { 
-        dispatch(setAllCategories(res.data));
-        dispatch(setFilterOn2(true))
-    }).catch(err => {
-        dispatch(errorMessage(err.response.data.message)); 
-    })
+    dispatch(clearMessage()); 
+    dispatch(setFilterOn2(true));
 }
 const setFilterOn2 = (bool) => {
     return {type : FILTER_ON_TWO, payload : bool};
