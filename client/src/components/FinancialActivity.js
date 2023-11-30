@@ -5,11 +5,11 @@ import { finalizeDelete, firstStepDelete, renderExpensesCall } from "../redux/ac
 import { StyledFin } from "../styles/StyledFin";
 import { useEffect } from "react";
 import { AnalyticsContext } from "../contexts/AnalyticsContext";
-import { initiateFetchAllCategories, initiateFetchAnalytics } from "../redux/actions/fin-actions";
+import { handleRadioChange, initiateFetchAllCategories, initiateFetchAnalytics } from "../redux/actions/fin-actions";
 import CategoryChart, { addIcon } from "./CategoryChart";
 import { RadioGroup } from "@headlessui/react";
 import RadioGroupContext from "@mui/material/RadioGroup/RadioGroupContext";
-import { FormControlLabel, Radio } from "@mui/material";
+import { FormControl, FormControlLabel, FormLabel, Radio } from "@mui/material";
 
 function FinancialActivity(props) {
     const [current, change] = useCurrent("");
@@ -51,19 +51,31 @@ function FinancialActivity(props) {
             <div id="transactions" className="container last">
 
                 <div className="heading-box-two" ><span>Latest Activity <CurrencyDollarIcon style={{ width: "1.5rem", height: "1.5rem" }} /></span>
-                   {props.analytics.filterOn && <span onClick={reset} className = {props.analytics.filterOn ? "active-background-no2" : "unactive-background-no2"}><XMarkIcon style={{width : "1.5rem"}} />Remove Filter</span> }
-                   {!props.analytics.filterOn && !props.analytics.filterOnTwo && <span onClick={ternaryHandler} className = {props.analytics.filterOnTwo ? "active-background-no2" : "unactive-background-no2"}><AdjustmentsHorizontalIcon style={{width : "1.5rem"}} />Add Filter</span>}
-                   {!props.analytics.filterOn && props.analytics.filterOnTwo && <span onClick={ternaryHandler} className = {props.analytics.filterOnTwo ? "active-background-no2" : "unactive-background-no2"}><XMarkIcon style={{width : "1.5rem"}} />
-                   Remove Filter
-                   </span>}
-                   <div 
-                   className = {!props.analytics.filterOn && props.analytics.filterOnTwo ? "on" : "off"}>
-                    <span >
-                        {props.analytics.analytics.map((n,i) => {
-                            return <Radio className="radio" key = {i} name = "radio-group" value = {n.sub_category_name} />
-                        })}
-                    </span>
-                   </div>
+                    {props.analytics.filterOn && <span onClick={reset} className={props.analytics.filterOn ? "active-background-no2" : "unactive-background-no2"}><XMarkIcon style={{ width: "1.5rem" }} />Remove Filter</span>}
+                    {!props.analytics.filterOn && !props.analytics.filterOnTwo && <span onClick={ternaryHandler} className={props.analytics.filterOnTwo ? "active-background-no2" : "unactive-background-no2"}><AdjustmentsHorizontalIcon style={{ width: "1.5rem" }} />Add Filter</span>}
+                    {!props.analytics.filterOn && props.analytics.filterOnTwo && <span onClick={ternaryHandler} className={props.analytics.filterOnTwo ? "active-background-no2" : "unactive-background-no2"}><XMarkIcon style={{ width: "1.5rem" }} />
+                        Remove Filter
+                    </span>}
+                    <div
+                        className={!props.analytics.filterOn && props.analytics.filterOnTwo ? "on" : "off"}>
+                        <span id="filterSection">
+                                    {props.analytics.analytics.map((n, i) => {
+                                        const appendedLabel = n.sub_category_name;
+                                        const labelToInsert = <div id = "radio-label">{addIcon(n.sub_category_name)}{appendedLabel}</div>
+                                        return <FormControlLabel value={n.sub_category_name} 
+                                        checked = {props.analytics.filterChoice === n.sub_category_name} 
+                                        onChange={(e)=> props.handleRadioChange(e.target.value)} control={<Radio onClick={() => advancedFilter(n.sub_category_name)}
+                                            sx={{
+                                                "&:hover" :
+                                                {color : "white"},
+                                                '&.Mui-checked' : {
+                                                    color : "#4f46e5",
+                                                }
+                                            }}
+                                            />} label={labelToInsert} />
+                                    })}
+                        </span>
+                    </div>
                 </div>
 
                 {props.data.activities[0] && props.data.activities[0].map((n, i) => {
@@ -105,4 +117,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete, initiateFetchAnalytics, initiateFetchAllCategories })(FinancialActivity);
+export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete, initiateFetchAnalytics, initiateFetchAllCategories, handleRadioChange })(FinancialActivity);

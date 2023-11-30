@@ -1,4 +1,4 @@
-import { ANALYTIC_ERROR, CLEAR_MESSAGE_NO3,FILTER_ON,FILTER_ON_TWO,SET_ALL_CATEGORIES,SET_ANALYTIC_STATE } from "../actions/fin-actions";
+import { ANALYTIC_ERROR, CLEAR_MESSAGE_NO3,FILTER_ON,FILTER_ON_TWO,HANDLE_CHANGE_RADIO,SET_ALL_CATEGORIES,SET_ANALYTIC_STATE } from "../actions/fin-actions";
 
 const initialState = {
     analytics : [],
@@ -6,6 +6,7 @@ const initialState = {
     filterOn : false,
     categories : [],
     filterOnTwo : false,
+    filterChoice : "",
 }
 
 export const fin_state = (state = initialState, action) => {
@@ -19,9 +20,11 @@ export const fin_state = (state = initialState, action) => {
         case(FILTER_ON) :
             return ({...state, filterOn : action.payload, filterOnTwo : false});
         case(FILTER_ON_TWO) :
-            return ({...state, filterOnTwo : action.payload, filterOn : false})
+            return ({...state, filterOnTwo : action.payload, filterOn : false});
         case(SET_ALL_CATEGORIES) :
-            return ({...state, categories : action.payload})
+            return ({...state, categories : action.payload});
+        case(HANDLE_CHANGE_RADIO) :
+            return ({...state, filterChoice : action.payload});
         default : 
             return state;
     }

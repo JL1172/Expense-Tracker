@@ -1,6 +1,7 @@
-import { readAllCategories, renderAnalytics } from "../../utils/axiosWithAuth";
+import { renderAnalytics } from "../../utils/axiosWithAuth";
 import {setActivityState} from "./user-actions";
 export const SET_ANALYTICS = "SET_ANALYTICS";
+export const HANDLE_CHANGE_RADIO = "HANDLE_CHANGE_RADIO";
 export const FILTER_ON_TWO = "FILTER_ON_TWO";
 export const CLEAR_MESSAGE_NO3 = "CLEAR_MESSAGE_NO3";
 export const ANALYTIC_ERROR = "ANALYTIC_ERROR";
@@ -49,4 +50,7 @@ const errorMessage = (message) => {
 }
 export const setAllCategories = (data) => {
     return {type : SET_ALL_CATEGORIES, payload : data}
+}
+export const handleRadioChange = (value) => {
+    return {type : HANDLE_CHANGE_RADIO, payload : value}
 }

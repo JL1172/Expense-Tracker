@@ -150,6 +150,7 @@ export const StyledFin = styled.div`
                 transition : 50ms;
             }
         }*/
+      
         .active-background-no2 {
             background-color : #111827;
             width : 10rem;
@@ -185,33 +186,50 @@ export const StyledFin = styled.div`
             opacity : 1;
             background-color : transparent;
             backdrop-filter : blur(10px);
-            outline : 2px solid #4f46e5;
+            border : 2px solid #4f46e5;
             border-radius : 5px;
             position : absolute;
             transform : scaleY(0);
             width : 10rem;
             right : 0;
             top : 5rem;
-            height : 15rem;
+            min-height : 15rem;
             z-index : 13;
             transform-origin : top;
             transition : .2s;
+            min-height : 15rem;
+            height : fit-content;
         } 
         .on {
             opacity : 1;
             background-color : transparent;
             backdrop-filter : blur(10px);
-            outline : 2px solid #4f46e5;
+            border : 2px solid #4f46e5;
             border-radius : 5px;
             position : absolute;
             transform : scaleY(100%);
-            width : 30rem;
+            width : 15rem;
             right : 0;
             top : 5rem;
-            height : 15rem;
+            min-height : 15rem;
+            height : fit-content;
             z-index : 13;
+            border-right-color : transparent;
             transform-origin : top;
             transition : .2s;
+        }
+        #radio-label {
+            display : flex;
+            align-items : center;
+        }
+        #filterSection {
+            display : flex;
+            flex-direction : column;
+            justify-content : center;
+            align-items : flex-start;
+            height : 15rem;
+            width : 100%;
+            padding-left : 1rem;
         }
        /*  */
        
@@ -416,29 +434,38 @@ export const StyledFin = styled.div`
 
     @media screen and (min-width: 1696px) {
         .off {
-          position : absolute;
-          transform : scaleY(0);   
-          width : 10vw;
-          height : 10rem;
-          top : 5rem;
-          right : 0;
-          z-index : 13;
-          transform-origin : top;
-          transition : .2s;
-          opacity : 0;
+            opacity : 1;
+            background-color : transparent;
+            backdrop-filter : blur(10px);
+            border : 2px solid #4f46e5;
+            border-radius : 5px;
+            position : absolute;
+            transform : scaleY(0);
+            width : 10rem;
+            right : 0;
+            top : 5rem;
+            min-height : 15rem;
+            z-index : 13;
+            transform-origin : top;
+            transition : .2s;
+            min-height : 15rem;
+            height : fit-content;
         } 
         .on {
             opacity : 1;
             background-color : transparent;
             backdrop-filter : blur(10px);
-            outline : 2px solid #4f46e5;
+            border : 2px solid #4f46e5;
             border-radius : 5px;
             position : absolute;
             transform : scaleY(100%);
-            width : 100%;
+            width : 15rem;
+            right : 0;
             top : 5rem;
-            height : 15rem;
+            min-height : 15rem;
+            height : fit-content;
             z-index : 13;
+            border-right-color : transparent;
             transform-origin : top;
             transition : .2s;
         }
@@ -507,29 +534,38 @@ export const StyledFin = styled.div`
     }
     @media screen and (max-width: 600px) {
         .off {
-          position : absolute;
-          transform : scaleY(0);   
-          width : 10vw;
-          height : 10rem;
-          top : 5rem;
-          right : 0;
-          z-index : 13;
-          transform-origin : top;
-          transition : .2s;
-          opacity : 0;
+            opacity : 1;
+            background-color : transparent;
+            backdrop-filter : blur(10px);
+            border : 2px solid #4f46e5;
+            border-radius : 5px;
+            position : absolute;
+            transform : scaleY(0);
+            width : 10rem;
+            right : 0;
+            top : 5rem;
+            min-height : 15rem;
+            z-index : 13;
+            transform-origin : top;
+            transition : .2s;
+            min-height : 15rem;
+            height : fit-content;
         } 
         .on {
             opacity : 1;
             background-color : transparent;
             backdrop-filter : blur(10px);
-            outline : 2px solid #4f46e5;
+            border : 2px solid #4f46e5;
             border-radius : 5px;
             position : absolute;
             transform : scaleY(100%);
-            width : 100%;
+            width : 15rem;
+            right : 0;
             top : 5rem;
-            height : 15rem;
+            min-height : 15rem;
+            height : fit-content;
             z-index : 13;
+            border-right-color : transparent;
             transform-origin : top;
             transition : .2s;
         }
