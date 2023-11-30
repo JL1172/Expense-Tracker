@@ -1,9 +1,11 @@
-import { ANALYTIC_ERROR, CLEAR_MESSAGE_NO3,FILTER_ON,SET_ANALYTIC_STATE } from "../actions/fin-actions";
+import { ANALYTIC_ERROR, CLEAR_MESSAGE_NO3,FILTER_ON,FILTER_ON_TWO,SET_ALL_CATEGORIES,SET_ANALYTIC_STATE } from "../actions/fin-actions";
 
 const initialState = {
     analytics : [],
     errorMessage : "",
     filterOn : false,
+    categories : [],
+    filterOnTwo : false,
 }
 
 export const fin_state = (state = initialState, action) => {
@@ -15,7 +17,11 @@ export const fin_state = (state = initialState, action) => {
         case(SET_ANALYTIC_STATE) :
             return ({...state, analytics : action.payload});
         case(FILTER_ON) :
-            return ({...state, filterOn : action.payload})
+            return ({...state, filterOn : action.payload, filterOnTwo : false});
+        case(FILTER_ON_TWO) :
+            return ({...state, filterOnTwo : action.payload, filterOn : false})
+        case(SET_ALL_CATEGORIES) :
+            return ({...state, categories : action.payload})
         default : 
             return state;
     }

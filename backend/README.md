@@ -24,6 +24,9 @@
 
 ### User Activity enpoints 
 * http://localhost:8000/api/activity `get` `takes query parameters`
+* http://localhost:8000/api/activity/categories?filter=Transportation `get` 
+built for the filter method on the financial activity 
+`takes query parameters`
 > [!IMPORTANT]
 > * this endpoint allows users to see their financial activity
 > * there are authorization headers needed for this from the jwt token given to the user on sign in

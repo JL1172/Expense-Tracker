@@ -63,10 +63,14 @@ async function findCategoryFrequency(id,query) {
     */
 }
 
+async function readOnlyCategories() {
+    return await db("sub_categories");
+}
 module.exports = {
     findAll,
     addActivity,
     updateActivity,
     remove,
-    findCategoryFrequency
+    findCategoryFrequency,
+    readOnlyCategories,
 }

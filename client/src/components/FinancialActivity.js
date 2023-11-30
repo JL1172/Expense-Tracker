@@ -5,7 +5,7 @@ import { finalizeDelete, firstStepDelete, renderExpensesCall } from "../redux/ac
 import { StyledFin } from "../styles/StyledFin";
 import { useEffect } from "react";
 import { AnalyticsContext } from "../contexts/AnalyticsContext";
-import { initiateFetchAnalytics } from "../redux/actions/fin-actions";
+import { initiateFetchAllCategories, initiateFetchAnalytics } from "../redux/actions/fin-actions";
 import CategoryChart, { addIcon } from "./CategoryChart";
 
 function FinancialActivity(props) {
@@ -26,6 +26,13 @@ function FinancialActivity(props) {
         props.renderExpensesCall();
         props.initiateFetchAnalytics();
     }
+    const ternaryHandler = () => {
+        if (props.analytics.filterOnTwo) {
+            reset();
+        } else {
+            props.initiateFetchAllCategories();
+        }
+    }
     return (
         <StyledFin>
             <div className="container first-container">
@@ -40,9 +47,19 @@ function FinancialActivity(props) {
             </div>
             <div id="transactions" className="container last">
                 <div className="heading-box-two" ><span>Latest Activity <CurrencyDollarIcon style={{ width: "1.5rem", height: "1.5rem" }} /></span>
-                    {!props.analytics.filterOn ? <span className="unactive-filter" id="showAll"><AdjustmentsHorizontalIcon style={{ width: "1.5rem", height: "1.5rem" }} />Add Filter</span> 
-                    : <span onClick={reset} id="showAll" className="active-filter"><XMarkIcon style={{ width: "1.5rem", height: "1.5rem" }} />Remove Filter</span>}
-                    </div>
+                    {props.analytics.filterOn ?
+                        <span
+                            className={"active-background-no2 unactive-filter-no2"} id="showAll">
+                            <div onClick={reset} id="sub-ids"><XMarkIcon style={{ width: "1.5rem", height: "1.5rem" }} />Remove Filter</div>
+                        </span>
+                        :
+                        <span
+                            className={!props.analytics.filterOnTwo ? "unactive-filter-no2 " : "active-filter-no2 active-background-no2"} id="showAll">
+                            {!props.analytics.filterOnTwo ? <div onClick={ternaryHandler} id="sub-ids"><AdjustmentsHorizontalIcon style={{ width: "1.5rem", height: "1.5rem" }} />Add Filter</div>
+                                :
+                                <div onClick={ternaryHandler} id="sub-ids"><XMarkIcon style={{ width: "1.5rem", height: "1.5rem" }} />Remove Filter</div>}
+                        </span>}
+                </div>
                 {props.data.activities[0] && props.data.activities[0].map((n, i) => {
                     if (i < Infinity) {
                         return <div onClick={() => change(i)} id={current === i ? "focused" : props.data.firstDelete === i ? "focused" : "notFocused"} className={props.data.firstDelete === i ? "activities removal" : "activities non-removal"} key={i}>
@@ -51,7 +68,7 @@ function FinancialActivity(props) {
                             </div>
                             <div className="shown-section" > ${n.category_name === "expenses" ?
                                 n.activity_amount.toString().split("").reverse().map((n, i) => {
-                                    if (i % 3 === 0 && i !== 0) {
+                                    if (n >= 1000 && i % 3 === 0 && i !== 0) {
                                         return `${n},`
                                     } return n;
                                 }).reverse().join("")
@@ -82,4 +99,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete, initiateFetchAnalytics })(FinancialActivity);
+export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete, initiateFetchAnalytics, initiateFetchAllCategories })(FinancialActivity);

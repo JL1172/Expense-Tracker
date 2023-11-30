@@ -15,7 +15,12 @@ router.get("/categories",restrict,queryValidation,async(req,res,next) => {
         res.status(200).json(result);
     } catch(err) {next(err)}
 })
-
+router.get("/read-only-categories",restrict,async(req,res,next) => {
+    try {
+        const result = await ActivityData.readOnlyCategories();
+        res.status(200).json(result);
+    } catch (err) {next(err)}
+})
 router.post("/",restrict,validateActivityPost,validateCategory,async(req,res,next) => {
     try {
         const addedActivity = await ActivityData.addActivity(req.decodedJwt,req.body);

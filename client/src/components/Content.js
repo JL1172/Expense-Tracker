@@ -53,7 +53,7 @@ function Content(props) {
                             </div>
                             <div className="shown-section" > ${n.category_name === "expenses" ?
                                 n.activity_amount.toString().split("").reverse().map((n, i) => {
-                                    if (i % 3 === 0 && i !== 0) {
+                                    if (n >= 1000 && i % 3 === 0 && i !== 0) {
                                         return `${n},`
                                     } return n;
                                 }).reverse().join("")
