@@ -214,6 +214,7 @@ export const StyledFin = styled.div`
             transition : .2s;
         }
        /*  */
+       
 
     .activities {
         cursor: pointer;
