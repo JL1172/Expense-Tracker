@@ -1,6 +1,7 @@
 import { addExpense, readAllCategories } from "../../utils/axiosWithAuth";
 
 export const SET_READ_ONLY_STATE = "SET_READ_ONLY_STATE";
+export const CLOSE_EDIT = "CLOSE_EDIT";
 export const VERIFY_TOLERANCE = "VERIFY_TOLERANCE";
 export const ERROR_EXPENSE_ADDITION = "ERROR_EXPENSE_ADDITION";
 export const SUCCESS_EXPENSE_ADDITION = "SUCCESS_EXPENSE_ADDITION";
@@ -52,6 +53,10 @@ export const enterEditMode = (data) => {
     return {type : EDIT_MODE, payload : data};
 }
 
+export const closeEditMode = (bool) => {
+    return {type : CLOSE_EDIT, payload : bool};
+}
+
 const setReadOnlyState = (data) => {
     return {type : SET_READ_ONLY_STATE, payload : data};
 }
@@ -67,7 +72,7 @@ const errorMessage = (message) => {
 const verifyToleranceAllowed = (bool) => {
     return {type : VERIFY_TOLERANCE, payload : bool}
 }
-const resetState = () => {
+export const resetState = () => {
     return {type : RESET_STATE}
 }
 /*

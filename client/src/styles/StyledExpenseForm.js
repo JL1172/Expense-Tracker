@@ -32,6 +32,8 @@ align-items : center;
     border-radius : 5px;
     transition : 200ms;
     }
-
+    #information-edit {
+        width : 100vw !important;
+    }
 }
 `

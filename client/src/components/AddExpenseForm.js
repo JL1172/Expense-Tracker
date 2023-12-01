@@ -2,9 +2,9 @@ import { Alert, AlertTitle, Button, FormControl, InputLabel, MenuItem, Select, T
 import { StyledExpenseForm } from "../styles/StyledExpenseForm";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { handleInputChange, initiateExpenseAddition, readOnlyCategoryFetchCall, successMessage } from "../redux/actions/expenseAdd-actions";
+import { closeEditMode, handleInputChange, initiateExpenseAddition, readOnlyCategoryFetchCall, resetState, successMessage } from "../redux/actions/expenseAdd-actions";
 import FallingSpinner from "./Spinner";
-import { XMarkIcon} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 function AddExpenseForm(props) {
     useEffect(() => {
@@ -35,15 +35,30 @@ function AddExpenseForm(props) {
         }
         props.initiateExpenseAddition(postBody);
     }
+    const finalizeEdit = (data) => {
+        console.log(data);
+    }
     return (
         <StyledExpenseForm>
             {/* updated to change dependent on if it is adding or updating */}
+            {props.data.edit_mode_state &&
+                <Alert severity="info" style={{
+                    width: "100vw", display: "flex", justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "28px"
+                }} id="information-edit">
+                    <span style={{display : "flex", flexDirection : "column", justifyContent : "center",alignItems : "center"}}>
+                    <strong>Transaction Edit Mode</strong>
+                    <span title="Date of Transaction">{props.data.created_at.slice(0,10)}</span>
+                    </span>
+                </Alert>
+            }
             {props.data.successMessage &&
                 <div>
-                    <Alert severity="success" style={{position : "relative"}}>
+                    <Alert severity="success" style={{ position: "relative" }}>
                         <AlertTitle>Success</AlertTitle>
                         You expense was just added, go check it out in the activity tab!
-                        <XMarkIcon onClick={()=>props.successMessage(false)} id = "x-out" style={{width : "1.5rem"}} />
+                        <XMarkIcon onClick={() => props.successMessage(false)} id="x-out" style={{ width: "1.5rem" }} />
                     </Alert>
                 </div>
             }
@@ -79,8 +94,13 @@ function AddExpenseForm(props) {
                         value={props.data.activity_amount}
                         onChange={(e) => props.handleInputChange({ name: e.target.name, value: e.target.value })}
                     />
-                    {props.data.tolerance ? <Button onClick={finalizeSubmit} variant="contained">Verify Amount</Button> :
-                        <Button onClick={advancedSubmit} variant="contained" sx={{ height: "3rem" }}>Add Expense</Button>}
+                    {!props.data.edit_mode_state && props.data.tolerance ? <Button onClick={finalizeSubmit} variant="contained">Verify Amount</Button> :
+                        !props.data.edit_mode_state ? <Button onClick={advancedSubmit} variant="contained" sx={{ height: "3rem" }}>Add Expense</Button>
+                            : <>
+                            <Button onClick={finalizeEdit} variant="contained" sx={{ height: "3rem" }}>Update Transaction</Button>
+                            <Button onClick={()=>props.resetState()} variant="outlined" sx={{ height: "3rem" }}>Exit Edit Mode</Button>
+                            </>
+                    }
                 </div>
             }
             {props.data.errorMessage && <Alert severity="error">{props.data.errorMessage}</Alert>}
@@ -94,4 +114,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { readOnlyCategoryFetchCall, handleInputChange, initiateExpenseAddition, successMessage })(AddExpenseForm);
+export default connect(mapStateToProps, { readOnlyCategoryFetchCall, handleInputChange, initiateExpenseAddition, successMessage, closeEditMode, resetState })(AddExpenseForm);
