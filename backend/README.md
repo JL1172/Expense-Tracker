@@ -47,6 +47,7 @@ request body
 > [!IMPORTANT]
 > * this endpoint allows users to change and updated certain purchases
 > * there are authorization headers needed for this from the jwt token given to the user on sign in
+    This is the req.body
     activity_description
     activity_id
     category_id
