@@ -7,6 +7,7 @@ export const SUCCESS_EXPENSE_ADDITION = "SUCCESS_EXPENSE_ADDITION";
 export const HANDLE_INPUT_CHANGE = "HANDLE_INPUT_CHANGE";
 export const SPINNER_EXPENSE = "SPINNER_EXPENSE";
 export const RESET_STATE = "RESET_STATE";
+export const EDIT_MODE = "EDIT_MODE";
 
 export const handleInputChange = (bundle) => {
     return {type : HANDLE_INPUT_CHANGE, payload : bundle};
@@ -45,6 +46,10 @@ export const initiateExpenseAddition = (newExpense) => dispatch => {
 
 export const editTransactionInitiate = (editBody) => dispatch => {
     
+}
+
+export const enterEditMode = (data) => {
+    return {type : EDIT_MODE, payload : data};
 }
 
 const setReadOnlyState = (data) => {

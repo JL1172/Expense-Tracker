@@ -1,4 +1,4 @@
-import { renderAnalytics } from "../../utils/axiosWithAuth";
+import { deleteExpense, renderAnalytics } from "../../utils/axiosWithAuth";
 import {setActivityState} from "./user-actions";
 export const SET_ANALYTICS = "SET_ANALYTICS";
 export const HANDLE_CHANGE_RADIO = "HANDLE_CHANGE_RADIO";
@@ -34,6 +34,8 @@ export const initiateFetchAllCategories = () => dispatch => {
     dispatch(clearMessage()); 
     dispatch(setFilterOn2(true));
 }
+
+
 const setFilterOn2 = (bool) => {
     return {type : FILTER_ON_TWO, payload : bool};
 }

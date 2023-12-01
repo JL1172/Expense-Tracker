@@ -3,18 +3,21 @@ import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, CurrencyDollarIcon, CreditC
 import { useCurrent } from "./customHooks/useCurrent";
 import { finalizeDelete, firstStepDelete, renderExpensesCall } from "../redux/actions/user-actions";
 import { StyledFin } from "../styles/StyledFin";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { AnalyticsContext } from "../contexts/AnalyticsContext";
 import { handleRadioChange, initiateFetchAllCategories, initiateFetchAnalytics } from "../redux/actions/fin-actions";
 import CategoryChart, { addIcon } from "./CategoryChart";
-import { RadioGroup } from "@headlessui/react";
-import RadioGroupContext from "@mui/material/RadioGroup/RadioGroupContext";
-import { FormControl, FormControlLabel, FormLabel, Radio } from "@mui/material";
+import {  FormControlLabel, Radio } from "@mui/material";
+import { RoutingContext } from "../contexts/RoutingContext";
+import { enterEditMode } from "../redux/actions/expenseAdd-actions";
 
 function FinancialActivity(props) {
     const [current, change] = useCurrent("");
+    const {direct} = useContext(RoutingContext);
     const advancedDelete = async (activity_id) => {
         await props.finalizeDelete(activity_id);
+        props.renderExpensesCall();
+        props.initiateFetchAnalytics();
         change("");
     }
     useEffect(() => {
@@ -35,6 +38,10 @@ function FinancialActivity(props) {
         } else {
             props.initiateFetchAllCategories();
         }
+    }
+    const advancedEdit = (data) => {
+        direct("Add Expense");
+        props.enterEditMode(data);
     }
     return (
         <StyledFin>
@@ -100,7 +107,7 @@ function FinancialActivity(props) {
                                 <div className={props.data.firstDelete === i ? "seen-confirm" : ""}>Confirm Deletion?</div>
                                 <span onClick={() => advancedDelete(n.activity_id)} className={props.data.firstDelete === i ? "seen-confirm" : ""} id="button">Yes<ArrowSmallRightIcon id="xMark2" /></span></div>}
                             {current === i && <TrashIcon onClick={() => props.firstStepDelete(i)} id="trash" />}
-                            {current === i && <PencilSquareIcon id="pencil" />}
+                            {current === i && <PencilSquareIcon id="pencil" onClick={()=> advancedEdit(n)}/>}
                         </div>
                     }
                 })}
@@ -117,4 +124,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete, initiateFetchAnalytics, initiateFetchAllCategories, handleRadioChange })(FinancialActivity);
+export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete, initiateFetchAnalytics, initiateFetchAllCategories, handleRadioChange, enterEditMode })(FinancialActivity);
