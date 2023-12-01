@@ -32,7 +32,17 @@ export default function SideBar() {
         { name: 'Your Profile', },
         { name: 'Sign out' },
     ];
-
+    const ternaryFunction = (directive) => {
+        if (directive === "Sign out") {
+            logout(directive);
+        } else {
+            direct("Account");
+        }
+    }
+    const advancedDirect = (directive) => {
+        direct(directive);
+        changeMenu();
+    }
     return (
         <>
             <div id="heading">
@@ -47,7 +57,7 @@ export default function SideBar() {
                     })}
                     {user.icon}
                     <div className={toggleProfile ? "hidden-profile-drop" : "hidden-hidden"}>
-                        {userNavigation.map(n => <div key={n.name} onClick={() => logout(n.name)} className="profile-section">{n.name}</div>)}
+                        {userNavigation.map(n => <div key={n.name} onClick={() => ternaryFunction(n.name)} className="profile-section">{n.name}</div>)}
                     </div>
                 </div>
                 <div id="hiddenMenu">
@@ -59,7 +69,7 @@ export default function SideBar() {
                 {navigation.map(n => {
                     return <div
                         className={routing === n.name ? "current item" : "item"}
-                        onClick={() => direct(n.name)}
+                        onClick={() => advancedDirect(n.name)}
                         key={n.path}>
                         {n.name}
                     </div>

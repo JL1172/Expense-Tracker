@@ -39,6 +39,7 @@ function FinancialActivity(props) {
             props.initiateFetchAllCategories();
         }
     }
+    
     const advancedEdit = (data) => {
         direct("Add Expense");
         props.enterEditMode(data);

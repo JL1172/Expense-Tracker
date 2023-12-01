@@ -1,7 +1,7 @@
 import { LockClosedIcon, CurrencyDollarIcon, ChartBarIcon, ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline';
 import { Button } from '@mui/material';
 import { StyledButton } from '../styles/StyledButton';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../contexts/Global';
 
 const features = [
@@ -30,7 +30,6 @@ const features = [
     icon: ChatBubbleBottomCenterIcon,
   },
 ]
-
 export default function LandingPage() {
   const {directory} = useContext(GlobalContext);
   return (

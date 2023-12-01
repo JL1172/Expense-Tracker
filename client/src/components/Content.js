@@ -1,15 +1,18 @@
 import { connect } from "react-redux";
 import { StyledContent } from "../styles/StyledContent";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { finalizeDelete, firstStepDelete, renderExpensesCall } from "../redux/actions/user-actions";
 import Chart from "./Chart";
 import { ChartContext } from "../contexts/ChartContext";
 import ExpenseChart from "./BarChart";
 import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, CurrencyDollarIcon, CreditCardIcon, TrashIcon, PencilSquareIcon, ArrowSmallLeftIcon, XMarkIcon, ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import { useCurrent } from "../components/customHooks/useCurrent";
+import { RoutingContext } from "../contexts/RoutingContext";
+import { enterEditMode } from "../redux/actions/expenseAdd-actions";
 
 function Content(props) {
     const [current, change] = useCurrent("");
+    const {direct} = useContext(RoutingContext);
     let monetary = props.data.user_info_income.toString().split("").reverse().map((n, i) => {
         if (props.data.user_info_income >= 1000 && i % 3 === 0 && i !== 0) {
             return `${n},`
@@ -29,6 +32,11 @@ function Content(props) {
     const advancedDelete = async(activity_id) => {
         await props.finalizeDelete(activity_id);
         change("");
+    }
+     
+    const advancedEdit = (data) => {
+        direct("Add Expense");
+        props.enterEditMode(data);
     }
     return (
         <StyledContent>
@@ -67,7 +75,7 @@ function Content(props) {
                             <div className={props.data.firstDelete === i ? "seen-confirm" : ""}>Confirm Deletion?</div>
                             <span onClick={()=> advancedDelete(n.activity_id)} className={props.data.firstDelete === i ? "seen-confirm" : ""} id="button">Yes<ArrowSmallRightIcon id="xMark2" /></span></div>}
                             {current === i && <TrashIcon onClick={() => props.firstStepDelete(i)} id="trash" />}
-                            {current === i && <PencilSquareIcon id="pencil" />}
+                            {current === i && <PencilSquareIcon id="pencil" onClick={()=> advancedEdit(n)}/>}
                         </div>
                     }
                 })}
@@ -83,4 +91,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete })(Content);
+export default connect(mapStateToProps, { renderExpensesCall, firstStepDelete, finalizeDelete, enterEditMode })(Content);

@@ -27,6 +27,7 @@ function Register(props) {
         }
         props.initiateRegister(credentials);
     }
+    
     useEffect(()=>{
         if (props.data.loginPage) {
             nav("/login");

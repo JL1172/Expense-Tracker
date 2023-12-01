@@ -18,7 +18,7 @@ function DashBoard(props) {
     }, [])//eslint-disable-line
     useEffect(() => {
         if (props.homePage) {
-            nav("/");
+            nav("/"); 
         }
     }, [props.homePage])//eslint-disable-line
     return (

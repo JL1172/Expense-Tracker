@@ -7,6 +7,16 @@ export const renderDashBoard = () => {
     const auth = axios.create({ headers: { Authorization: token } })
     return auth.get(`${BASE_URL}/userInfo`);
 }
+export const updateAccountInfo = (updated) => {
+    const token = JSON.parse(window.localStorage.getItem("token"));
+    const auth = axios.create({ headers: { Authorization: token } })
+    return auth.put(`${BASE_URL}/userInfo/financial`,updated);
+}
+export const updatePassword = (updatedBody) => {
+    const token = JSON.parse(window.localStorage.getItem("token"));
+    const auth = axios.create({ headers: { Authorization: token } })
+    return auth.put(`${BASE_URL}/userInfo/credentials`,updatedBody);
+}
 export const renderExpenses = () => {
     const token = JSON.parse(window.localStorage.getItem("token"));
     const auth = axios.create({ headers: { Authorization: token } })
@@ -41,4 +51,10 @@ export const addExpense = (postBody) => {
     const token = JSON.parse(window.localStorage.getItem("token"));
     const auth = axios.create({ headers: { Authorization: token } });
     return auth.post(`${BASE_URL}/activity`,postBody)
+}
+
+export const updateExpense = (putBody) => {
+    const token = JSON.parse(window.localStorage.getItem("token"));
+    const auth = axios.create({ headers: { Authorization: token } });
+    return auth.put(`${BASE_URL}/activity`,putBody); 
 }

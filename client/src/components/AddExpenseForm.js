@@ -2,7 +2,7 @@ import { Alert, AlertTitle, Button, FormControl, InputLabel, MenuItem, Select, T
 import { StyledExpenseForm } from "../styles/StyledExpenseForm";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { closeEditMode, handleInputChange, initiateExpenseAddition, readOnlyCategoryFetchCall, resetState, successMessage } from "../redux/actions/expenseAdd-actions";
+import { closeEditMode, editTransactionInitiate, handleInputChange, initiateExpenseAddition, readOnlyCategoryFetchCall, resetState, successMessage } from "../redux/actions/expenseAdd-actions";
 import FallingSpinner from "./Spinner";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -35,8 +35,22 @@ function AddExpenseForm(props) {
         }
         props.initiateExpenseAddition(postBody);
     }
-    const finalizeEdit = (data) => {
-        console.log(data);
+    const finalizeEdit = () => {
+        const putBody = {
+            activity_description : props.data.activity_description,
+            activity_amount : props.data.activity_amount,
+            activity_id : props.data.activity_id,
+            category_id : props.data.category_id,
+            category_name : props.data.category_name,
+            sub_category_id : props.data.category_chosen,
+            sub_category_name : props.data.sub_category_name,
+            tolerance_accepted : true,
+        }
+        props.editTransactionInitiate(putBody);
+    }
+    const advancedSuccessClose = () => {
+        props.readOnlyCategoryFetchCall();
+        props.successMessage(false)
     }
     return (
         <StyledExpenseForm>
@@ -58,7 +72,7 @@ function AddExpenseForm(props) {
                     <Alert severity="success" style={{ position: "relative" }}>
                         <AlertTitle>Success</AlertTitle>
                         You expense was just added, go check it out in the activity tab!
-                        <XMarkIcon onClick={() => props.successMessage(false)} id="x-out" style={{ width: "1.5rem" }} />
+                        <XMarkIcon onClick={advancedSuccessClose} id="x-out" style={{ width: "2rem" }} />
                     </Alert>
                 </div>
             }
@@ -103,7 +117,7 @@ function AddExpenseForm(props) {
                     }
                 </div>
             }
-            {props.data.errorMessage && <Alert severity="error">{props.data.errorMessage}</Alert>}
+            {props.data.errorMessage && <Alert style={{marginBottom : "2rem"}} severity="error">{props.data.errorMessage}</Alert>}
         </StyledExpenseForm>
     )
 }
@@ -114,4 +128,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { readOnlyCategoryFetchCall, handleInputChange, initiateExpenseAddition, successMessage, closeEditMode, resetState })(AddExpenseForm);
+export default connect(mapStateToProps, { readOnlyCategoryFetchCall, handleInputChange, initiateExpenseAddition, successMessage, closeEditMode, resetState, editTransactionInitiate })(AddExpenseForm);

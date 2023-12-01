@@ -22,7 +22,7 @@ align-items : center;
 }
 #x-out {
     position : absolute;
-    right : 4px;
+    right : 1rem;
     top : 4px;
     transition : 200ms;
     &:hover {
@@ -34,6 +34,12 @@ align-items : center;
     }
     #information-edit {
         width : 100vw !important;
+    }
+}
+@media screen and (max-width: 800px) {
+    #formGroup {
+        height : 80vh;
+        width : 98%;
     }
 }
 `

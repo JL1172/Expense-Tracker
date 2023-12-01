@@ -1,4 +1,4 @@
-import { addExpense, readAllCategories } from "../../utils/axiosWithAuth";
+import { addExpense, readAllCategories, updateExpense } from "../../utils/axiosWithAuth";
 
 export const SET_READ_ONLY_STATE = "SET_READ_ONLY_STATE";
 export const CLOSE_EDIT = "CLOSE_EDIT";
@@ -28,8 +28,8 @@ export const initiateExpenseAddition = (newExpense) => dispatch => {
     dispatch(errorMessage(""));
     dispatch(spinnerExpenseOn(true));
     addExpense(newExpense).then(res => {
-        dispatch(successMessage(true));
         dispatch(resetState())
+        dispatch(successMessage(true));
     }).catch(err => {
         console.error(err)
         if (err.response.data.message.message) {
@@ -46,7 +46,23 @@ export const initiateExpenseAddition = (newExpense) => dispatch => {
 }
 
 export const editTransactionInitiate = (editBody) => dispatch => {
-    
+    dispatch(errorMessage(""));
+    dispatch(spinnerExpenseOn(true));
+    updateExpense(editBody).then(res => {
+        dispatch(resetState())
+        dispatch(successMessage(true));
+    }).catch(err => {
+        if (err.response.data.message.message) {
+            dispatch(errorMessage(err.response.data.message.message));
+            dispatch(verifyToleranceAllowed(true));
+        } else {
+            dispatch(errorMessage(err.response.data.message));
+        }
+    }).finally(()=>{
+        setTimeout(()=> {
+            dispatch(spinnerExpenseOn(false));
+        },500)
+    })
 }
 
 export const enterEditMode = (data) => {
