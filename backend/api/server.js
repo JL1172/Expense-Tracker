@@ -2,7 +2,7 @@ const express = require("express");
 const AuthRouter = require("../api/auth/auth-router");
 const UserInfoRouter = require("../api/user-info/user-info-router");
 const ActivityRouter = require("../api/activity/activity-router");
-const path = require("path"); //eslint-disable-line
+const path = require("path");
 
 //import middleware
 const helmet = require("helmet");
@@ -15,6 +15,7 @@ const server = express();
 //instantiation
 
 //deployment usages
+server.use(express.static(path.join(__dirname, '../../build')))
 server.use(express.json());
 server.use(cors());
 server.use(helmet());
@@ -29,19 +30,21 @@ server.use(morgan("dev"));
 //TODO 
 
 //routers
-server.use("/api/auth",AuthRouter); 
-server.use("/api/userInfo",UserInfoRouter);
-server.use("/api/activity",ActivityRouter);
+server.use("/api/auth", AuthRouter);
+server.use("/api/userInfo", UserInfoRouter);
+server.use("/api/activity", ActivityRouter);
 //routers
-
-server.get("*",(req,res,next) => {
-    next({status : 404, message : "not found"});
+server.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../build'))
+})
+server.get("*", (req, res, next) => {
+    next({ status: 404, message: "not found" });
 })
 
-server.use((error,req,res,next) => { //eslint-disable-line
+server.use((error, req, res, next) => { //eslint-disable-line
     res.status(error.status || 500).json({
-        message : error.message,
-        stack : error.stack,
+        message: error.message,
+        stack: error.stack,
     })
 })
 
