@@ -43,6 +43,10 @@ export const initiateExpenseAddition = (newExpense) => dispatch => {
     })
 }
 
+export const editTransactionInitiate = (editBody) => dispatch => {
+    
+}
+
 const setReadOnlyState = (data) => {
     return {type : SET_READ_ONLY_STATE, payload : data};
 }

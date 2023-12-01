@@ -16,6 +16,6 @@ export const useAll = (key1,key2, state1, state2,state3) => {
     const makeProfileVisible = () => {
         setToggleProfile(!toggleProfile);
     }
-    const signOut = (name) => {if (name === "Sign out") {window.localStorage.clear();}}
+    const signOut = (name) => {if (name === "Sign out") {localStorage.clear();}}
     return [routing,direct,toggleMenu,changeMenu,toggleProfile,makeProfileVisible,signOut];
 }
