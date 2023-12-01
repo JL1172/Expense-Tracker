@@ -47,6 +47,13 @@ request body
 > [!IMPORTANT]
 > * this endpoint allows users to change and updated certain purchases
 > * there are authorization headers needed for this from the jwt token given to the user on sign in
+    activity_description
+    activity_id
+    category_id
+    category_name
+    sub_category_id
+    sub_category_name
+    tolerance_accepted
 * http://localhost:8000/api/activity `delete`
 > [!IMPORTANT]
 > * this endpoint allows users to delete certain purchases
