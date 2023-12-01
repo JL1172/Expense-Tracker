@@ -62,7 +62,7 @@ function FinancialActivity(props) {
                                     {props.analytics.analytics.map((n, i) => {
                                         const appendedLabel = n.sub_category_name;
                                         const labelToInsert = <div id = "radio-label">{addIcon(n.sub_category_name)}{appendedLabel}</div>
-                                        return <FormControlLabel value={n.sub_category_name} 
+                                        return <FormControlLabel key = {n.sub_category_name} value={n.sub_category_name} 
                                         checked = {props.analytics.filterChoice === n.sub_category_name} 
                                         onChange={(e)=> props.handleRadioChange(e.target.value)} control={<Radio onClick={() => advancedFilter(n.sub_category_name)}
                                             sx={{

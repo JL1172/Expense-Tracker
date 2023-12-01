@@ -11,6 +11,7 @@ export const SET_ALL_CATEGORIES = "SET_ALL_CATEGORIES";
 
 export const initiateFetchAnalytics = (query) => dispatch => {
     dispatch(setFilterOn(false));
+    dispatch(handleRadioChange(""));
     if (query) {
         dispatch(clearMessage());
         renderAnalytics(query).then(res => {
@@ -45,7 +46,7 @@ const setStateAnalytics = (data) => {
 const clearMessage = () => {
     return { type: CLEAR_MESSAGE_NO3 }
 }
-const errorMessage = (message) => {
+export const errorMessage = (message) => {
     return { type: ANALYTIC_ERROR, payload: message }
 }
 export const setAllCategories = (data) => {

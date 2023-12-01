@@ -37,3 +37,8 @@ export const readAllCategories = () => {
     return auth.get(`${BASE_URL}/activity/read-only-categories`)
 }
 
+export const addExpense = (postBody) => {
+    const token = JSON.parse(window.localStorage.getItem("token"));
+    const auth = axios.create({ headers: { Authorization: token } });
+    return auth.post(`${BASE_URL}/activity`,postBody)
+}
