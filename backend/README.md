@@ -33,13 +33,13 @@ built for the filter method on the financial activity
 * http://localhost:8000/api/activity `post` `added tolerance message`
 ```
 request body 
-activity_amount : number
-sub_category_name : string
-sub_category_id : id
-category_name : string
-category_id : id
-user_username : string
-activity_description : string
+    activity_description: 
+    activity_id: 
+    category_id: 
+    category_name: 
+    sub_category_id: 
+    sub_category_name: 
+    tolerance_accepted: 
 ```
 > [!IMPORTANT]
 > * this endpoint allows users to add their assets, liability, and equity, and the current category the activity falls under, and sub categories 

@@ -3,11 +3,6 @@ const db = require("../../database/db-config");
 
 const schema = yup.object().shape({
     activity_description: yup.string().required("description is required").matches(/^[A-Za-z ]*$/, "only letters allowed"),
-    activity_amount: yup.number().test(
-        'valid',
-        'invalid monetary amount',
-        value => (value + "").match(/^\d*\.{1}\d*$/),
-    ),
     category_id: yup.string().required("category id is required").matches(/^[0-9]*$/, "must only be numerical value"),
     category_name: yup.string().required("category name is required"),
     sub_category_id: yup.string().required("sub category id is required").matches(/^[0-9]*$/, "must only be numerical value"),
@@ -17,11 +12,6 @@ const schema = yup.object().shape({
 const schema2 = yup.object().shape({
     activity_description: yup.string().required("description is required").matches(/^[A-Za-z ]*$/, "only letters allowed"),
     activity_id: yup.string().required("activity id is required").matches(/^[0-9]*$/, "must only be numerical value"),
-    activity_amount: yup.number().test(
-        'valid',
-        'invalid monetary amount',
-        value => (value + "").match(/^\d*\.{1}\d*$/),
-    ),
     category_id: yup.string().required("category id is required").matches(/^[0-9]*$/, "must only be numerical value"),
     category_name: yup.string().required("category name is required"),
     sub_category_id: yup.string().required("sub category id is required").matches(/^[0-9]*$/, "must only be numerical value"),
@@ -33,12 +23,16 @@ const schema2 = yup.object().shape({
 async function validateActivityPost(req, res, next) {
     try {
         const isValid = schema.validateSync(req.body, { abortEarly: false, stripUnknown: true }); //eslint-disable-line
+        if (!req.body.activity_amount) next({ status: 422, message: "activity amount required" });
+        if (isNaN(req.body.activity_amount)) next({ status: 422, message: "amount must be number" });
         next();
     } catch (err) { next({ status: 422, message: { error: err.errors } }) }
 }
 async function validateActivityPut(req, res, next) {
     try {
         const isValid = schema2.validateSync(req.body, { abortEarly: false, stripUnknown: true }); //eslint-disable-line
+        if (!req.body.activity_amount) next({ status: 422, message: "activity amount required" });
+        if (isNaN(req.body.activity_amount)) next({ status: 422, message: "amount must be number" });
         next();
     } catch (err) { next({ status: 422, message: { error: err.errors } }) }
 }
@@ -114,17 +108,17 @@ async function validateCategory(req, res, next) {
 
 async function queryValidation(req, res, next) {
     try {
-        console.log(req.query)
+        // console.log(req.query)
         if (Object.keys(req.query).length > 0) {
-            if (!req.query.filter) next({status : 400, message : "Ensure correct parameters"})
-            const result = await db("sub_categories").where("sub_category_name",req.query.filter);
-            console.log(result)
+            if (!req.query.filter) next({ status: 400, message: "Ensure correct parameters" })
+            const result = await db("sub_categories").where("sub_category_name", req.query.filter);
+            // console.log(result)
             if (!result.length) {
-                next({status : 400, message : "Category not found"});
+                next({ status: 400, message: "Category not found" });
             } else {
-                next(); 
+                next();
             }
-        } else next(); 
+        } else next();
     } catch (err) { next(err) }
 }
 
