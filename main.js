@@ -3,18 +3,14 @@ const { app, BrowserWindow } = require('electron');
 
 function createWindow() {
   const win = new BrowserWindow({
-    // maxWidth: 700,
-    height : 600,
-    width : 600,
-    // minWidth : 450,
-    // minHeight : 450,
-    // maxHeight: 700,
+    height : 1000,
+    width : 1000,
     webPreferences: {
       nodeIntegration: true,
     },
   });
   
-  win.loadURL("http://localhost:8000");
+  win.loadURL("http://localhost:8005");
 }
 
 app.whenReady().then(createWindow);
